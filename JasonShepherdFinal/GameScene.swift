@@ -34,8 +34,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bluePlayerTexture = SKTexture(imageNamed: "blueoval.png")
     let redPlayerTexture = SKTexture(imageNamed: "redoval.png")
     
-   // Array to store high scores
+    // Boolean value for single player game
+    let singlePlayer = false
+    
+    // Array to store high scores
     var highScores = [String]()
+    
     
     override func didMoveToView(view: SKView) {
         
@@ -155,12 +159,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
         
         // Assign player physics
-        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: 30)
+        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         bluePlayer.physicsBody!.dynamic = true
         bluePlayer.physicsBody!.allowsRotation = false
         bluePlayer.physicsBody!.affectedByGravity = false
         
-        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 30)
+        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         redPlayer.physicsBody!.dynamic = true
         redPlayer.physicsBody!.allowsRotation = false
         redPlayer.physicsBody!.affectedByGravity = false
@@ -254,33 +258,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /*override func didChangeSize(oldSize: CGSize) {
-        // Assign button positions
-        //setupButtons()
-        if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
-        {
-            print("landscape")
-        }
-        
-        if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
-        {
-            print("Portrait")
-        }
-    }*/
-    
-    
+    // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-        
-        print("bluePlayer.position.y is \(bluePlayer.position.y)")
-        
-        //print("redPlayer.position.y is \(redPlayer.position.y)")
-        
+       
         // Check for boundary collisions
         updateBounds()
         
-        // Update AI
-        updateAI()
+        // Update AI if it is a single player game
+        if singlePlayer {
+            updateAI()
+        }
 
     }
 }
