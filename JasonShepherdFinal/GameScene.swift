@@ -8,9 +8,9 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    // Define buttons
+    // Define button nodes
     var blueBtnUp: SKNode! = nil
     var blueBtnDown: SKNode! = nil
     var blueBtnLeft: SKNode! = nil
@@ -20,28 +20,40 @@ class GameScene: SKScene {
     var redBtnLeft: SKNode! = nil
     var redBtnRight: SKNode! = nil
     
-    // Define textures
+    // Define button textures
     let btnTextureUp = SKTexture(imageNamed: "up-arrow.png")
     let btnTextureDown = SKTexture(imageNamed: "down-arrow.png")
     let btnTextureLeft = SKTexture(imageNamed: "left-arrow.png")
     let btnTextureRight = SKTexture(imageNamed: "right-arrow.png")
     
-    // Array to store high scores
+    // Define player nodes
+    var bluePlayer: SKNode! = nil
+    var redPlayer: SKNode! = nil
+    
+    // Define player textures
+    let bluePlayerTexture = SKTexture(imageNamed: "blueoval.png")
+    let redPlayerTexture = SKTexture(imageNamed: "redoval.png")
+    
+   // Array to store high scores
     var highScores = [String]()
     
     override func didMoveToView(view: SKView) {
         
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "BP"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))//(scene!.size.height - self.size.height))
+        // Setup physics world
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVectorMake(0, -5)
         
-        self.addChild(myLabel)
+        // Setup and load players
+        setupPlayers()
+        
+        // Add player nodes to the view
+        self.addChild(bluePlayer)
+        self.addChild(redPlayer)
         
         // Setup and load all buttons
         setupButtons()
         
-        // Add all buttons to scene
+        // Add button nodes to the view
         self.addChild(blueBtnUp)
         self.addChild(blueBtnDown)
         self.addChild(blueBtnLeft)
@@ -62,31 +74,44 @@ class GameScene: SKScene {
             // Loop through the touches in event
             let location = touch.locationInNode(self)
             
-            
             // Check if the touch locations are within button bounds
             if blueBtnUp.containsPoint(location) {
                 print("blueBtnUp pressed")
+                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
             }
             if blueBtnDown.containsPoint(location) {
                 print("blueBtnDown pressed")
+                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
             }
             if blueBtnLeft.containsPoint(location) {
                 print("blueBtnLeft pressed")
+                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
             }
             if blueBtnRight.containsPoint(location) {
                 print("blueBtnRight pressed")
+                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+
             }
             if redBtnUp.containsPoint(location) {
                 print("redBtnUp pressed")
+                redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+
             }
             if redBtnDown.containsPoint(location) {
                 print("redBtnDown pressed")
+                redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+                
             }
             if redBtnLeft.containsPoint(location) {
-                print("redeBtnLeft pressed")
+                print("redBtnLeft pressed")
+                redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+
+                
             }
             if redBtnRight.containsPoint(location) {
                 print("redBtnRight pressed")
+                redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+
             }
         }
     }
@@ -106,19 +131,67 @@ class GameScene: SKScene {
         redBtnRight = SKSpriteNode(texture: btnTextureLeft)
        
         // Assign button positions
-        blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY)
-        blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+50, y: scene!.view!.bounds.minY)
-        blueBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+100, y: scene!.view!.bounds.minY)
-        blueBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+150, y: scene!.view!.bounds.minY)
+        blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 50)
+        blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+50, y: scene!.view!.bounds.minY + 50)
+        blueBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+100, y: scene!.view!.bounds.minY + 50)
+        blueBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+150, y: scene!.view!.bounds.minY + 50)
         
         // Assign button positions
-        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY)
-        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY)
-        redBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-100, y: scene!.view!.bounds.maxY)
-        redBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-150, y: scene!.view!.bounds.maxY)
+        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 50)
+        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY - 50)
+        redBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-100, y: scene!.view!.bounds.maxY - 50)
+        redBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-150, y: scene!.view!.bounds.maxY - 50)
         
     }
     
+    func setupPlayers() {
+        
+        // Assign as SKSpriteNodes and load textures
+        bluePlayer = SKSpriteNode(texture: bluePlayerTexture)
+        redPlayer = SKSpriteNode(texture: redPlayerTexture)
+        
+        // Assign player positions
+        bluePlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 100)
+        redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
+        
+        // Assign player physics
+        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: 30)
+        bluePlayer.physicsBody!.dynamic = true
+        bluePlayer.physicsBody!.allowsRotation = false
+        bluePlayer.physicsBody!.affectedByGravity = false
+        
+        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 30)
+        redPlayer.physicsBody!.dynamic = true
+        redPlayer.physicsBody!.allowsRotation = false
+        redPlayer.physicsBody!.affectedByGravity = false
+        
+        
+    }
+    
+    // Function to implement some simple AI
+    func updateAI() {
+        
+        // Assign AI difficulty
+        let difficulty:CGFloat = 0.05
+
+        // Update red position based on blue position and difficulty level
+        if bluePlayer.position.x > redPlayer.position.x {
+            redPlayer.physicsBody!.applyImpulse(CGVectorMake(difficulty,0))
+        }
+        if bluePlayer.position.x < redPlayer.position.x {
+            redPlayer.physicsBody!.applyImpulse(CGVectorMake(-difficulty,0))
+        }
+        if bluePlayer.position.y > redPlayer.position.y {
+            redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,difficulty))
+
+        }
+        if bluePlayer.position.y < redPlayer.position.y {
+            redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-difficulty))
+        }
+
+    }
+    
+    // Function to show high scores
     func showHighScores() {
         // Sync high scores with permanent storage
         if NSUserDefaults.standardUserDefaults().objectForKey("highScores") != nil {
@@ -160,15 +233,12 @@ class GameScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        //setupButtons()
-        /*if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
-        {
-            print("landscape")
-        }
         
-        if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
-        {
-            print("Portrait")
-        }*/
+        print("bluePlayer.position.y is \(bluePlayer.position.y)")
+        print("redPlayer.position.y is \(redPlayer.position.y)")
+ 
+        
+        updateAI()
+
     }
 }
