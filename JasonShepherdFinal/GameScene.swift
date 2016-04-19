@@ -99,31 +99,30 @@ class GameScene: SKScene {
         blueBtnDown = SKSpriteNode(texture: btnTextureDown)
         blueBtnLeft = SKSpriteNode(texture: btnTextureLeft)
         blueBtnRight = SKSpriteNode(texture: btnTextureRight)
-       
-        // Assign button positions
-        blueBtnUp.position = CGPoint(x: CGRectGetMidX(self.frame), y: scene!.frame.minY)
-        blueBtnDown.position = CGPoint(x: CGRectGetMidX(self.frame)+50, y: scene!.frame.minY)
-        blueBtnLeft.position = CGPoint(x: CGRectGetMidX(self.frame)+100, y: scene!.frame.minY)
-        blueBtnRight.position = CGPoint(x: CGRectGetMidX(self.frame)+150, y: scene!.frame.minY)
-        
         // Assign as SKSpriteNodes and load textures -- red buttons are inverted :)
         redBtnUp = SKSpriteNode(texture: btnTextureDown)
         redBtnDown = SKSpriteNode(texture: btnTextureUp)
         redBtnLeft = SKSpriteNode(texture: btnTextureRight)
         redBtnRight = SKSpriteNode(texture: btnTextureLeft)
+       
+        // Assign button positions
+        blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY)
+        blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+50, y: scene!.view!.bounds.minY)
+        blueBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+100, y: scene!.view!.bounds.minY)
+        blueBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+150, y: scene!.view!.bounds.minY)
         
         // Assign button positions
-        redBtnUp.position = CGPoint(x: CGRectGetMidX(self.frame), y: scene!.frame.maxY)
-        redBtnDown.position = CGPoint(x: CGRectGetMidX(self.frame)-50, y: scene!.frame.maxY)
-        redBtnLeft.position = CGPoint(x: CGRectGetMidX(self.frame)-100, y: scene!.frame.maxY)
-        redBtnRight.position = CGPoint(x: CGRectGetMidX(self.frame)-150, y: scene!.frame.maxY)
+        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY)
+        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY)
+        redBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-100, y: scene!.view!.bounds.maxY)
+        redBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-150, y: scene!.view!.bounds.maxY)
         
     }
     
     func showHighScores() {
         // Sync high scores with permanent storage
         if NSUserDefaults.standardUserDefaults().objectForKey("highScores") != nil {
-        highScores = NSUserDefaults.standardUserDefaults().objectForKey("highScores") as! [String]
+            highScores = NSUserDefaults.standardUserDefaults().objectForKey("highScores") as! [String]
         }
         
         
@@ -144,7 +143,32 @@ class GameScene: SKScene {
         }
     }
     
+    /*override func didChangeSize(oldSize: CGSize) {
+        // Assign button positions
+        //setupButtons()
+        if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
+        {
+            print("landscape")
+        }
+        
+        if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
+        {
+            print("Portrait")
+        }
+    }*/
+    
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        //setupButtons()
+        /*if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
+        {
+            print("landscape")
+        }
+        
+        if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
+        {
+            print("Portrait")
+        }*/
     }
 }

@@ -11,8 +11,8 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
        
         if let scene = GameScene(fileNamed:"GameScene") {
             // Configure the view.
@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .ResizeFill
             skView.presentScene(scene)
         }
     }
