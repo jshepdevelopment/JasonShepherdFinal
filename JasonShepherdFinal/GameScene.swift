@@ -183,22 +183,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if bluePlayer.position.y > redPlayer.position.y {
             redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,difficulty))
-
         }
         if bluePlayer.position.y < redPlayer.position.y {
             redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-difficulty))
         }
+    }
 
+    // Function to keep players within screen
+    func updateBounds() {
+        
+        // Comparing position to view bounds and assigning accordingly
+        // Set velocity to nothing, to allow quick recovery
+        if bluePlayer.position.x < scene!.view!.bounds.minX {
+            bluePlayer.position.x = scene!.view!.bounds.minX
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if bluePlayer.position.x > scene!.view!.bounds.maxX {
+            bluePlayer.position.x = scene!.view!.bounds.maxX
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if bluePlayer.position.y < scene!.view!.bounds.minY {
+            bluePlayer.position.y = scene!.view!.bounds.minY
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if bluePlayer.position.y > scene!.view!.bounds.maxY {
+            bluePlayer.position.y = scene!.view!.bounds.maxY
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if redPlayer.position.x < scene!.view!.bounds.minX {
+            redPlayer.position.x = scene!.view!.bounds.minX
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if redPlayer.position.x > scene!.view!.bounds.maxX {
+            redPlayer.position.x = scene!.view!.bounds.maxX
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if redPlayer.position.y < scene!.view!.bounds.minY {
+            redPlayer.position.y = scene!.view!.bounds.minY
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
+        if redPlayer.position.y > scene!.view!.bounds.maxY {
+            redPlayer.position.y = scene!.view!.bounds.maxY
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+        }
     }
     
     // Function to show high scores
     func showHighScores() {
+        
         // Sync high scores with permanent storage
         if NSUserDefaults.standardUserDefaults().objectForKey("highScores") != nil {
             highScores = NSUserDefaults.standardUserDefaults().objectForKey("highScores") as! [String]
         }
         
-        
+        // Testing append high score values
         highScores.append("Score 1")
         highScores.append("Score 2")
         highScores.append("Score 3")
@@ -235,9 +273,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called before each frame is rendered */
         
         print("bluePlayer.position.y is \(bluePlayer.position.y)")
-        print("redPlayer.position.y is \(redPlayer.position.y)")
- 
         
+        //print("redPlayer.position.y is \(redPlayer.position.y)")
+        
+        // Check for boundary collisions
+        updateBounds()
+        
+        // Update AI
         updateAI()
 
     }
