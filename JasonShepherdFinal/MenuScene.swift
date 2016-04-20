@@ -11,7 +11,8 @@ import SpriteKit
 class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
-        addButtons()
+        //addButtons()
+        showMenu()
     }
    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -28,7 +29,14 @@ class MenuScene: SKScene {
         // TODO layout buttons here
     }
     
-    
+    private func showMenu() {
+        // Setup menu
+        let mainLabel = SKLabelNode(fontNamed:"Chalkduster")
+        mainLabel.text = "Touch to Start"
+        mainLabel.fontSize = 35
+        mainLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ))
+        self.addChild(mainLabel)
+    }
     
     private func startGame() {
         let gameScene = GameScene(fileNamed: "GameScene")

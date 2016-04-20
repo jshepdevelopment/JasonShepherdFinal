@@ -52,9 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinCategory: UInt32 = 3
     let bombCategory: UInt32 = 4
     
-    // Array to store high scores
-    var highScores = [String]()
-    
     // Vars to store red and blue score
     var blueScore = 0
     var redScore = 0
@@ -62,6 +59,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Timers
     var coinTimer: NSTimer!
     var bombTimer: NSTimer!
+    
+    // Boolean to handle game over check
+    var gameOverFlag = false
     
     override func didMoveToView(view: SKView) {
         
@@ -108,8 +108,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Loop through the touches in event
             let location = touch.locationInNode(self)
             
-            
-            
             // Check if the touch locations are within button bounds
             if blueBtnUp.containsPoint(location) {
                 bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
@@ -134,6 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if redBtnRight.containsPoint(location) {
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                gameOverFlag = true
             }
         }
     }
@@ -146,6 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueBtnDown = SKSpriteNode(texture: btnTextureDown)
         blueBtnLeft = SKSpriteNode(texture: btnTextureLeft)
         blueBtnRight = SKSpriteNode(texture: btnTextureRight)
+        
         // Assign as SKSpriteNodes and load textures -- red buttons are inverted :)
         redBtnUp = SKSpriteNode(texture: btnTextureDown)
         redBtnDown = SKSpriteNode(texture: btnTextureUp)
@@ -174,6 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    // Setup player sprites
     func setupPlayers() {
         
         // Assign as SKSpriteNodes and load textures
@@ -191,7 +192,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bluePlayer.physicsBody!.affectedByGravity = false
         bluePlayer.physicsBody!.categoryBitMask = blueCategory
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
-
         
         redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         redPlayer.physicsBody!.dynamic = true
@@ -201,14 +201,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
         
         // Add player score labels
-        // Set up label
         blueScoreLabel.fontName = "Chalkduster"
         blueScoreLabel.fontSize = 30
         blueScoreLabel.text = "0"
         blueScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+30, scene!.view!.bounds.minY+30)
         self.addChild(blueScoreLabel)
         
-        // Set up label
         redScoreLabel.fontName = "Chalkduster"
         redScoreLabel.fontSize = 30
         redScoreLabel.text = "0"
@@ -223,7 +221,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redScoreLabel.text = String(redScore)
         blueScoreLabel.text = String(blueScore)
     }
-    
     
     // Function to implement some simple AI
     func updateAI() {
@@ -291,9 +288,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin = SKSpriteNode(texture: coinTexture)
         let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
-        
-        coin.position = CGPointMake(x,y)
 
+        coin.position = CGPointMake(x,y)
         coin.physicsBody = SKPhysicsBody(circleOfRadius: 1)
         coin.physicsBody?.dynamic = true
         coin.physicsBody?.affectedByGravity = false
@@ -380,53 +376,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    // Function to show high scores
-    func showHighScores() {
+    func gameOver() {
         
-        // Sync high scores with permanent storage
-        if NSUserDefaults.standardUserDefaults().objectForKey("highScores") != nil {
-            highScores = NSUserDefaults.standardUserDefaults().objectForKey("highScores") as! [String]
-        }
+        // Invalidate timers
+        coinTimer.invalidate()
+        bombTimer.invalidate()
         
-        // Testing append high score values
-        highScores.append("Score 1")
-        highScores.append("Score 2")
-        highScores.append("Score 3")
+        //showHighScores()
+        let gameOverScene = GameOverScene(size: view!.bounds.size)
+        let transition = SKTransition.fadeWithDuration(0.15)
         
-        var scoreLabel = [SKLabelNode(fontNamed:"Chalkduster")]
-        
-        // Loop through high scores and display
-        for i in 0 ..< highScores.count {
-            scoreLabel.append(SKLabelNode(fontNamed:"ChalkDuster"))
-            
-            scoreLabel[i].text = highScores[i]
-            scoreLabel[i].fontSize = 35
-            scoreLabel[i].position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ) + CGFloat(Double(i*35)))
-            self.addChild(scoreLabel[i])
-        }
+        gameOverScene.scaleMode = .ResizeFill
+        view!.presentScene(gameOverScene, transition: transition)
     }
     
     // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
        
-        // Check for boundary collisions
-        updateBounds()
-        
-        // Update score labels
-        updateScores()
-        
-        // Update AI if it is a single player game
-        if GlobalVariables.singlePlayer != false {
-            updateAI()
+        // Check for game over
+        if gameOverFlag == true {
+            gameOver()
         }
         
-        // Remove coins and bombs from screen if needed
-        if coin != nil {
-            removeCoins()
+        // Update as long as game is not over
+        if gameOverFlag == false {
+            // Check for boundary collisions
+            updateBounds()
+            
+            // Update score labels
+            updateScores()
+            
+            // Update AI if it is a single player game
+            if GlobalVariables.singlePlayer != false {
+                updateAI()
+            }
+            
+            // Remove coins and bombs from screen if needed
+            if coin != nil {
+                removeCoins()
+            }
+            if bomb != nil {
+                removeBombs()
+            }
         }
-        if bomb != nil {
-            removeBombs()
-        }
-        
     }
 }

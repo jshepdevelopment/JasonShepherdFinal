@@ -13,6 +13,9 @@ import SpriteKit
 struct GlobalVariables {
     static var inMenu = true
     static var singlePlayer = true
+    static var blueScore = 0
+    static var redScore = 0
+
 }
 
 class GameViewController: UIViewController {
