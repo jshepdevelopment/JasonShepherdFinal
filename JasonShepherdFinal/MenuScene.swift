@@ -19,6 +19,8 @@ class MenuScene: SKScene {
         
        for touch: AnyObject in touches {
             print("Touch detected!")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey:"SINGLEPLAYER")
+
         }
     }
     

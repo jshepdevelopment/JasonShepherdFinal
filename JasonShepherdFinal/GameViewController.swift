@@ -9,16 +9,35 @@
 import UIKit
 import SpriteKit
 
+// Define a struct to hold some global variables
+struct GlobalVariables {
+    static var inMenu = true
+}
+
 class GameViewController: UIViewController {
 
+    var scene: SKScene!
+ 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
        
         //if let scene = GameScene(fileNamed:"GameScene") {
         //if let scene = MenuScene(size: view!.bounds.size) {
-        let scene = MenuScene(size: view!.bounds.size)
-        // Configure the view.
-            let skView = self.view as! SKView
+
+        let skView = self.view as! SKView
+  
+        if GlobalVariables.inMenu == true {
+            scene = MenuScene(size: view!.bounds.size)
+        }
+        if GlobalVariables.inMenu == false {
+            scene = GameScene(fileNamed: "GameScene")
+            scene.size  = skView.bounds.size
+            skView.presentScene(scene)
+        }
+        
+        // Check so scene wont be created twice.
+        if skView.scene == nil {
+            //scene = MenuScene(size: view!.bounds.size)
             skView.showsFPS = true
             skView.showsNodeCount = true
             
@@ -27,10 +46,14 @@ class GameViewController: UIViewController {
             
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .ResizeFill
+            scene.size  = skView.bounds.size
             skView.presentScene(scene)
-       // }
+        }
+
     }
 
+    
+    
     override func shouldAutorotate() -> Bool {
         return true
     }

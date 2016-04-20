@@ -35,17 +35,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let redPlayerTexture = SKTexture(imageNamed: "redoval.png")
     
     // Boolean value for single player game
-    let singlePlayer = false
+    var singlePlayer = true
     
     // Array to store high scores
     var highScores = [String]()
     
-    
     override func didMoveToView(view: SKView) {
+        
+        super.didMoveToView(view)
+        
+        // Prevents return to menu on orientation change
+        GlobalVariables.inMenu = false
         
         // Setup physics world
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVectorMake(0, -5)
+        
+        // Setup game type
+        //let setSinglePlayer: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("SINGLEPLAYER")!
+        singlePlayer = true//setSinglePlayer as! Bool
         
         // Setup and load players
         setupPlayers()
@@ -69,6 +77,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(redBtnRight)
         
     }
+    
+    
     
     // Overriding touchesBegan to detect screen touches
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -265,7 +275,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateBounds()
         
         // Update AI if it is a single player game
-        if singlePlayer {
+        if singlePlayer != false {
             updateAI()
         }
 
