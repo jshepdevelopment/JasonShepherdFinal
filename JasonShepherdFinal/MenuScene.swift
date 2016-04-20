@@ -40,21 +40,21 @@ class MenuScene: SKScene {
                 print("Two player game")
                 startGame()
             }
-            
             //NSUserDefaults.standardUserDefaults().setBool(false, forKey:"SINGLEPLAYER")
-
         }
     }
     
     // Add buttons to menu
     private func addButtons() {
         
+        // Single player label / button
         singleLabel = SKLabelNode(fontNamed:"Chalkduster")
         singleLabel.text = "One Player"
         singleLabel.fontSize = 35
         singleLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ))
         self.addChild(singleLabel)
         
+        // Multi player label / button
         multiLabel = SKLabelNode(fontNamed:"Chalkduster")
         multiLabel.text = "Two Players"
         multiLabel.fontSize = 35

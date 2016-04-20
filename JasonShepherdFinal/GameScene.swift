@@ -56,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueScore = 0
     var redScore = 0
     
+    var stopBluePlayer = false
+    var stopRedPlayer = false
+    
     // Timers
     var coinTimer: NSTimer!
     var bombTimer: NSTimer!
@@ -108,30 +111,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Loop through the touches in event
             let location = touch.locationInNode(self)
             
-            // Check if the touch locations are within button bounds
-            if blueBtnUp.containsPoint(location) {
-                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+            if !stopBluePlayer {
+                // Check if the touch locations are within button bounds
+                if blueBtnUp.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+                }
+                if blueBtnDown.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                }
+                if blueBtnLeft.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                }
+                if blueBtnRight.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                }
             }
-            if blueBtnDown.containsPoint(location) {
-                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
-            }
-            if blueBtnLeft.containsPoint(location) {
-                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
-            }
-            if blueBtnRight.containsPoint(location) {
-                bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
-            }
-            if redBtnUp.containsPoint(location) {
-                redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
-            }
-            if redBtnDown.containsPoint(location) {
-                redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
-            }
-            if redBtnLeft.containsPoint(location) {
-                redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
-            }
-            if redBtnRight.containsPoint(location) {
-                redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+            
+            if !stopRedPlayer {
+                if redBtnUp.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                }
+                if redBtnDown.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+                }
+                if redBtnLeft.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                }
+                if redBtnRight.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                }
             }
         }
     }
@@ -364,12 +372,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==bombCategory {
             print("blueCategory and bombCategory contact")
             //blueScore+=1
+            stopBluePlayer = true
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
             print("redCategory and bombCategory contact")
             //redScore+=1
+            stopRedPlayer = true
             secondBody.node!.removeFromParent()
         }
         
