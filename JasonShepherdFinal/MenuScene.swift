@@ -17,9 +17,9 @@ class MenuScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         startGame()
         
-       for touch: AnyObject in touches {
+       for _: AnyObject in touches {
             print("Touch detected!")
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey:"SINGLEPLAYER")
+            //NSUserDefaults.standardUserDefaults().setBool(false, forKey:"SINGLEPLAYER")
 
         }
     }

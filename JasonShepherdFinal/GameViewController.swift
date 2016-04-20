@@ -12,6 +12,7 @@ import SpriteKit
 // Define a struct to hold some global variables
 struct GlobalVariables {
     static var inMenu = true
+    static var singlePlayer = true
 }
 
 class GameViewController: UIViewController {
