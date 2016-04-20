@@ -9,33 +9,58 @@
 import SpriteKit
 
 class MenuScene: SKScene {
+
+    var singleLabel: SKLabelNode!
+    var multiLabel: SKLabelNode!
     
+    // Load menu view
     override func didMoveToView(view: SKView) {
-        //addButtons()
-        showMenu()
+        let mainLabel = SKLabelNode(fontNamed:"Chalkduster")
+        mainLabel.text = "Battle Penguins"
+        mainLabel.fontSize = 35
+        mainLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ) + 85)
+        self.addChild(mainLabel)
+        
+        addButtons()
+        
     }
    
+    // Check for menu touches
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        startGame()
         
-       for _: AnyObject in touches {
-            print("Touch detected!")
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            if singleLabel.containsPoint(location) {
+                GlobalVariables.singlePlayer = true
+                print("One player game")
+                startGame()
+            }
+            if multiLabel.containsPoint(location) {
+                GlobalVariables.singlePlayer = false
+                print("Two player game")
+                startGame()
+            }
+            
             //NSUserDefaults.standardUserDefaults().setBool(false, forKey:"SINGLEPLAYER")
 
         }
     }
     
+    // Add buttons to menu
     private func addButtons() {
-        // TODO layout buttons here
-    }
+        
+        singleLabel = SKLabelNode(fontNamed:"Chalkduster")
+        singleLabel.text = "One Player"
+        singleLabel.fontSize = 35
+        singleLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ))
+        self.addChild(singleLabel)
+        
+        multiLabel = SKLabelNode(fontNamed:"Chalkduster")
+        multiLabel.text = "Two Players"
+        multiLabel.fontSize = 35
+        multiLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) - 50)
+        self.addChild(multiLabel)
     
-    private func showMenu() {
-        // Setup menu
-        let mainLabel = SKLabelNode(fontNamed:"Chalkduster")
-        mainLabel.text = "Touch to Start"
-        mainLabel.fontSize = 35
-        mainLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ))
-        self.addChild(mainLabel)
     }
     
     private func startGame() {

@@ -44,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Define other texture
     var coinTexture = SKTexture(imageNamed: "candy.png")
-    var bombTexture = SKTexture(imageNamed: "cross.png")
+    var bombTexture = SKTexture(imageNamed: "bomb.png")
     
     // Define sprite groups
     let blueCategory: UInt32 = 1
@@ -132,7 +132,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if redBtnRight.containsPoint(location) {
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
-                gameOverFlag = true
             }
         }
     }
@@ -376,13 +375,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    // Start game over
     func gameOver() {
         
         // Invalidate timers
         coinTimer.invalidate()
         bombTimer.invalidate()
         
-        //showHighScores()
+        // Transisition into game over scene
         let gameOverScene = GameOverScene(size: view!.bounds.size)
         let transition = SKTransition.fadeWithDuration(0.15)
         
@@ -393,7 +393,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
        
-        // Check for game over
+        // Check for game over if conditions met
+        if redScore >= 10 || blueScore >= 10 {
+            gameOverFlag = true
+        }
         if gameOverFlag == true {
             gameOver()
         }
