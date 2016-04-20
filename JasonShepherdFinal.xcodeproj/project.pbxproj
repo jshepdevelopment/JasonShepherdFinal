@@ -14,6 +14,7 @@
 		047D04BB1CC69EFA00F9074E /* redoval.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04BA1CC69EFA00F9074E /* redoval.png */; };
 		047D04BD1CC69F3900F9074E /* blueoval.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04BC1CC69F3900F9074E /* blueoval.png */; };
 		047D04BF1CC6CEBA00F9074E /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047D04BE1CC6CEBA00F9074E /* MenuScene.swift */; };
+		047D04C11CC7E46100F9074E /* candy.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C01CC7E46100F9074E /* candy.png */; };
 		04A1B0071CBFEEED009559EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B0061CBFEEED009559EE /* AppDelegate.swift */; };
 		04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04A1B0081CBFEEED009559EE /* GameScene.sks */; };
 		04A1B00B1CBFEEED009559EE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B00A1CBFEEED009559EE /* GameScene.swift */; };
@@ -50,6 +51,7 @@
 		047D04BA1CC69EFA00F9074E /* redoval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redoval.png; sourceTree = "<group>"; };
 		047D04BC1CC69F3900F9074E /* blueoval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueoval.png; sourceTree = "<group>"; };
 		047D04BE1CC6CEBA00F9074E /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		047D04C01CC7E46100F9074E /* candy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candy.png; sourceTree = "<group>"; };
 		04A1B0031CBFEEEC009559EE /* JasonShepherdFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JasonShepherdFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B0061CBFEEED009559EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04A1B0081CBFEEED009559EE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				047D04B81CC68DE700F9074E /* right-arrow.png */,
 				047D04BA1CC69EFA00F9074E /* redoval.png */,
 				047D04BC1CC69F3900F9074E /* blueoval.png */,
+				047D04C01CC7E46100F9074E /* candy.png */,
 				04A1B0061CBFEEED009559EE /* AppDelegate.swift */,
 				04A1B0081CBFEEED009559EE /* GameScene.sks */,
 				04A1B00A1CBFEEED009559EE /* GameScene.swift */,
@@ -264,6 +267,7 @@
 				04A1B0151CBFEEED009559EE /* LaunchScreen.storyboard in Resources */,
 				047D04BD1CC69F3900F9074E /* blueoval.png in Resources */,
 				047D04BB1CC69EFA00F9074E /* redoval.png in Resources */,
+				047D04C11CC7E46100F9074E /* candy.png in Resources */,
 				047D04B51CC68DA200F9074E /* left-arrow.png in Resources */,
 				047D04B31CC68B9400F9074E /* up-arrow.png in Resources */,
 				04A1B0121CBFEEED009559EE /* Assets.xcassets in Resources */,

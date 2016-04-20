@@ -10,6 +10,10 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    // Define labels
+    var blueScoreLabel = SKLabelNode()
+    var redScoreLabel = SKLabelNode()
+    
     // Define button nodes
     var blueBtnUp: SKNode! = nil
     var blueBtnDown: SKNode! = nil
@@ -34,11 +38,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bluePlayerTexture = SKTexture(imageNamed: "blueoval.png")
     let redPlayerTexture = SKTexture(imageNamed: "redoval.png")
     
+    // Define other nodes
+    var coin: SKNode! = nil
+    
+    // Define other texture
+    var coinTexture = SKTexture(imageNamed: "candy.png")
+    
+    // Define sprite groups
+    let blueCategory: UInt32 = 1
+    let redCategory: UInt32 = 2
+    let coinCategory: UInt32 = 3
+    
     // Boolean value for single player game
     var singlePlayer = true
     
     // Array to store high scores
     var highScores = [String]()
+    
+    // Vars to store red and blue score
+    var blueScore = 0
+    var redScore = 0
+    
+    // Timers
+    var coinTimer: NSTimer!
     
     override func didMoveToView(view: SKView) {
         
@@ -76,9 +98,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(redBtnLeft)
         self.addChild(redBtnRight)
         
+        coinTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.addCoins), userInfo: nil, repeats: true)
+        
     }
-    
-    
     
     // Overriding touchesBegan to detect screen touches
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -90,42 +112,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Check if the touch locations are within button bounds
             if blueBtnUp.containsPoint(location) {
-                print("blueBtnUp pressed")
                 bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
             }
             if blueBtnDown.containsPoint(location) {
-                print("blueBtnDown pressed")
                 bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
             }
             if blueBtnLeft.containsPoint(location) {
-                print("blueBtnLeft pressed")
                 bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
             }
             if blueBtnRight.containsPoint(location) {
-                print("blueBtnRight pressed")
                 bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
-
             }
             if redBtnUp.containsPoint(location) {
-                print("redBtnUp pressed")
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
-
             }
             if redBtnDown.containsPoint(location) {
-                print("redBtnDown pressed")
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
-                
             }
             if redBtnLeft.containsPoint(location) {
-                print("redBtnLeft pressed")
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
-
-                
             }
             if redBtnRight.containsPoint(location) {
-                print("redBtnRight pressed")
                 redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
-
             }
         }
     }
@@ -173,14 +181,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bluePlayer.physicsBody!.dynamic = true
         bluePlayer.physicsBody!.allowsRotation = false
         bluePlayer.physicsBody!.affectedByGravity = false
+        bluePlayer.physicsBody!.categoryBitMask = blueCategory
+        bluePlayer.physicsBody!.contactTestBitMask = coinCategory
+
         
         redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         redPlayer.physicsBody!.dynamic = true
         redPlayer.physicsBody!.allowsRotation = false
         redPlayer.physicsBody!.affectedByGravity = false
+        redPlayer.physicsBody!.categoryBitMask = redCategory
+        redPlayer.physicsBody!.contactTestBitMask = coinCategory
+        
+        // Add player score labels
+        // Set up label
+        blueScoreLabel.fontName = "Chalkduster"
+        blueScoreLabel.fontSize = 30
+        blueScoreLabel.text = "0"
+        blueScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+30, scene!.view!.bounds.minY+30)
+        self.addChild(blueScoreLabel)
+        
+        // Set up label
+        redScoreLabel.fontName = "Chalkduster"
+        redScoreLabel.fontSize = 30
+        redScoreLabel.text = "0"
+        redScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-30, scene!.view!.bounds.maxY-30)
+        self.addChild(redScoreLabel)
         
         
     }
+    
+    // Update scores
+    func updateScores() {
+        redScoreLabel.text = String(redScore)
+        blueScoreLabel.text = String(blueScore)
+    }
+    
     
     // Function to implement some simple AI
     func updateAI() {
@@ -242,6 +277,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Adds coins
+    func addCoins() {
+        
+        coin = SKSpriteNode(texture: coinTexture)
+        let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
+        let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
+        
+        coin.position = CGPointMake(x,y)
+
+        coin.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        coin.physicsBody?.dynamic = true
+        coin.physicsBody?.affectedByGravity = false
+        coin.physicsBody?.categoryBitMask = coinCategory
+        coin.physicsBody?.contactTestBitMask = blueCategory | redCategory
+        coin.physicsBody?.velocity = CGVectorMake(-100,0)
+        
+        self.addChild(coin)
+
+    }
+    
+    // Removes coins
+    func removeCoins() {
+         if coin.position.x < scene!.view!.bounds.minX {
+            coin.removeFromParent()
+        }
+    }
+    
+    // Handles collisions
+    func didBeginContact(contact: SKPhysicsContact) {
+        
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==coinCategory {
+            print("blueCategory and coinCategory contact")
+            blueScore+=1
+            secondBody.node!.removeFromParent()
+            
+        }
+        if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
+            print("redCategory and coinCategory contact")
+            redScore+=1
+            secondBody.node!.removeFromParent()
+        }
+        
+    }
+    
     // Function to show high scores
     func showHighScores() {
         
@@ -274,10 +363,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Check for boundary collisions
         updateBounds()
         
+        // Update score labels
+        updateScores()
+        
         // Update AI if it is a single player game
         if singlePlayer != false {
             updateAI()
         }
-
+        
+        // Add coins to screen
+        //addCoins()
+        if coin != nil {
+            removeCoins()
+        }
     }
 }
