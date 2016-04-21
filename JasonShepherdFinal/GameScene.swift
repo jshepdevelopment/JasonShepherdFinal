@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Define labels
     var blueScoreLabel = SKLabelNode()
     var redScoreLabel = SKLabelNode()
+    var blueNameLabel = SKLabelNode()
+    var redNameLabel = SKLabelNode()
     
     // Define button nodes
     var blueBtnUp: SKNode! = nil
@@ -35,8 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var redPlayer: SKNode! = nil
     
     // Define player textures
-    let bluePlayerTexture = SKTexture(imageNamed: "blueoval.png")
-    let redPlayerTexture = SKTexture(imageNamed: "redoval.png")
+    let bluePlayerTexture = SKTexture(imageNamed: "bluepenguin.png")
+    let redPlayerTexture = SKTexture(imageNamed: "redpenguin.png")
     
     // Define other nodes
     var coin: SKNode! = nil
@@ -52,9 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinCategory: UInt32 = 3
     let bombCategory: UInt32 = 4
     
-    // Vars to store red and blue score
+    // Vars to store red and blue score and health
     var blueScore = 0
     var redScore = 0
+    var blueHealth = 3
+    var redHealth = 3
     
     var stopBluePlayer = false
     var stopRedPlayer = false
@@ -62,6 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Timers
     var coinTimer: NSTimer!
     var bombTimer: NSTimer!
+    var stopBlueTimer: NSTimer!
+    var stopRedTimer: NSTimer!
     
     // Boolean to handle game over check
     var gameOverFlag = false
@@ -207,17 +213,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.physicsBody!.categoryBitMask = redCategory
         redPlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
         
+        // Add player name labels
+        blueNameLabel.fontName = "Chalkduster"
+        blueNameLabel.fontSize = 25
+        blueNameLabel.text = GlobalVariables.playerOneName
+        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+60)
+        self.addChild(blueNameLabel)
+        redNameLabel.fontName = "Chalkduster"
+        redNameLabel.fontSize = 25
+        redNameLabel.text = GlobalVariables.playerTwoName
+        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-60)
+        redNameLabel.xScale = redNameLabel.xScale * -1
+        redNameLabel.yScale = redNameLabel.yScale * -1
+        self.addChild(redNameLabel)
+        
         // Add player score labels
         blueScoreLabel.fontName = "Chalkduster"
-        blueScoreLabel.fontSize = 30
+        blueScoreLabel.fontSize = 25
         blueScoreLabel.text = "0"
-        blueScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+30, scene!.view!.bounds.minY+30)
+        blueScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+30)
         self.addChild(blueScoreLabel)
-        
         redScoreLabel.fontName = "Chalkduster"
-        redScoreLabel.fontSize = 30
+        redScoreLabel.fontSize = 25
         redScoreLabel.text = "0"
-        redScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-30, scene!.view!.bounds.maxY-30)
+        redScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-30)
+        redScoreLabel.xScale = redScoreLabel.xScale * -1
         redScoreLabel.yScale = redScoreLabel.yScale * -1
         self.addChild(redScoreLabel)
         
@@ -255,37 +275,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Comparing position to view bounds and assigning accordingly
         // Set velocity to nothing, to allow quick recovery
-        if bluePlayer.position.x < scene!.view!.bounds.minX {
+        if bluePlayer.position.x <= scene!.view!.bounds.minX {
             bluePlayer.position.x = scene!.view!.bounds.minX
-            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            bluePlayer.physicsBody!.velocity = CGVectorMake(2,0)
         }
-        if bluePlayer.position.x > scene!.view!.bounds.maxX {
+        if bluePlayer.position.x >= scene!.view!.bounds.maxX {
             bluePlayer.position.x = scene!.view!.bounds.maxX
-            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            bluePlayer.physicsBody!.velocity = CGVectorMake(-2,0)
         }
-        if bluePlayer.position.y < scene!.view!.bounds.minY {
+        if bluePlayer.position.y <= scene!.view!.bounds.minY {
             bluePlayer.position.y = scene!.view!.bounds.minY
-            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,2)
         }
-        if bluePlayer.position.y > scene!.view!.bounds.maxY {
+        if bluePlayer.position.y >= scene!.view!.bounds.maxY {
             bluePlayer.position.y = scene!.view!.bounds.maxY
-            bluePlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            bluePlayer.physicsBody!.velocity = CGVectorMake(0,-2)
         }
-        if redPlayer.position.x < scene!.view!.bounds.minX {
+        if redPlayer.position.x <= scene!.view!.bounds.minX {
             redPlayer.position.x = scene!.view!.bounds.minX
-            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            redPlayer.physicsBody!.velocity = CGVectorMake(2,0)
         }
-        if redPlayer.position.x > scene!.view!.bounds.maxX {
+        if redPlayer.position.x >= scene!.view!.bounds.maxX {
             redPlayer.position.x = scene!.view!.bounds.maxX
-            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            redPlayer.physicsBody!.velocity = CGVectorMake(-2,0)
         }
-        if redPlayer.position.y < scene!.view!.bounds.minY {
+        if redPlayer.position.y <= scene!.view!.bounds.minY {
             redPlayer.position.y = scene!.view!.bounds.minY
-            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,2)
         }
-        if redPlayer.position.y > scene!.view!.bounds.maxY {
+        if redPlayer.position.y >= scene!.view!.bounds.maxY {
             redPlayer.position.y = scene!.view!.bounds.maxY
-            redPlayer.physicsBody!.velocity = CGVectorMake(0,0)
+            redPlayer.physicsBody!.velocity = CGVectorMake(0,-2)
         }
     }
     
@@ -318,12 +338,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Adds bombs
     func addBombs() {
         
+        // Assign texture and position
         bomb = SKSpriteNode(texture: bombTexture)
         let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
-        
         bomb.position = CGPointMake(x,y)
         
+        // Assign physics body attributes
         bomb.physicsBody = SKPhysicsBody(circleOfRadius: 1)
         bomb.physicsBody?.dynamic = true
         bomb.physicsBody?.affectedByGravity = false
@@ -371,18 +392,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Check for contact between players and bombs
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==bombCategory {
             print("blueCategory and bombCategory contact")
-            //blueScore+=1
-            stopBluePlayer = true
+            blueHealth-=1
+            print("blue health is \(blueHealth)")
+            stopBluePlayerTimer() // = true
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
             print("redCategory and bombCategory contact")
-            //redScore+=1
-            stopRedPlayer = true
+            redHealth-=1
+            print("red health is \(redHealth)")
+            stopRedPlayerTimer() // = true
             secondBody.node!.removeFromParent()
         }
         
+    }
+    
+    // Setup timer to stop blue player movement
+    func stopBluePlayerTimer() {
+        stopBluePlayer = true
+        stopBlueTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(GameScene.startBluePlayer), userInfo: nil, repeats: false)
+    }
+    
+    // Function is called after 3 seconds to allow movement
+    func startBluePlayer() {
+        stopBluePlayer = false
+    }
+    
+    // Setup timer to stop red player movement
+    func stopRedPlayerTimer() {
+        stopRedPlayer = true
+        stopRedTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(GameScene.startRedPlayer), userInfo: nil, repeats: false)
+    }
+    
+    // Function is called after 3 seconds to allow movement
+    func startRedPlayer() {
+        stopRedPlayer = false
     }
     
     // Start game over
@@ -391,6 +436,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Invalidate timers
         coinTimer.invalidate()
         bombTimer.invalidate()
+        
+        // Send scores to game over screen
+        GlobalVariables.blueScore = blueScore
+        GlobalVariables.redScore = redScore
         
         // Transisition into game over scene
         let gameOverScene = GameOverScene(size: view!.bounds.size)
@@ -404,9 +453,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
        
         // Check for game over if conditions met
-        if redScore >= 10 || blueScore >= 10 {
+        if blueHealth <= 0 || redHealth <= 0 {
+            
+            // Check for winner according to health
+            if blueHealth > redHealth {
+                GlobalVariables.winner = 1 // blue winner
+            }
+            if redHealth > blueHealth {
+                GlobalVariables.winner = 2 // red winner
+            }
+            if blueHealth == redHealth {
+                GlobalVariables.winner = 0 // tie game
+            }
+            
             gameOverFlag = true
         }
+
+        // Launch game over
         if gameOverFlag == true {
             gameOver()
         }

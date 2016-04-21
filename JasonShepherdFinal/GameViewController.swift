@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  JasonShepherdFinal
 //
-//  Created by Mac on 4/14/16.
+//  Created by Jason Shepherd on 4/14/16.
 //  Copyright (c) 2016 Salt Lake Community College. All rights reserved.
 //
 
@@ -15,16 +15,21 @@ struct GlobalVariables {
     static var singlePlayer = true
     static var blueScore = 0
     static var redScore = 0
+    static var winner = 0 // 0 is tie game, 1 is blue winner, 2 is red winner
+    
+    static var playerOneName: String!
+    static var playerTwoName = "AI"
 
 }
 
 class GameViewController: UIViewController {
 
     var scene: SKScene!
- 
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-       
+              
+        
         //if let scene = GameScene(fileNamed:"GameScene") {
         //if let scene = MenuScene(size: view!.bounds.size) {
 
