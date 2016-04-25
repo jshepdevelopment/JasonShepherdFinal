@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Define other nodes
     var coin: SKNode! = nil
     var bomb: SKNode! = nil
+    var fieldNode: SKFieldNode! = nil
     
     // Define other texture
     let coinTexture1 = SKTexture(imageNamed: "coin1.png")
@@ -65,6 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let redCategory: UInt32 = 2
     let coinCategory: UInt32 = 3
     let bombCategory: UInt32 = 4
+    let fieldNodeCategory: UInt32 = 0x1 << 5//5
+    let noFieldCategory: UInt32 = 0x1 << 6//6
     
     // Vars to store red and blue score and health
     var blueScore = 0
@@ -93,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Setup physics world
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVectorMake(0, -5)
+        self.physicsWorld.gravity = CGVectorMake(0, 0)
         
         // Setup and load players
         setupPlayers()
@@ -223,6 +226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bluePlayer.physicsBody!.affectedByGravity = false
         bluePlayer.physicsBody!.categoryBitMask = blueCategory
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
+        bluePlayer.physicsBody!.fieldBitMask = noFieldCategory
         
         redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: redPlayerTexture.size().width/2)
         redPlayer.physicsBody!.dynamic = true
@@ -230,6 +234,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.physicsBody!.affectedByGravity = false
         redPlayer.physicsBody!.categoryBitMask = redCategory
         redPlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
+        redPlayer.physicsBody!.fieldBitMask = noFieldCategory
         
         // Add player name labels
         blueNameLabel.fontName = "Chalkduster"
@@ -351,9 +356,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up physics body
         coin.physicsBody = SKPhysicsBody(circleOfRadius: coinTexture1.size().width/2)
         coin.physicsBody?.dynamic = true
-        coin.physicsBody?.affectedByGravity = false
+        coin.physicsBody?.affectedByGravity = true
         coin.physicsBody?.categoryBitMask = coinCategory
         coin.physicsBody?.contactTestBitMask = blueCategory | redCategory
+        coin.physicsBody?.fieldBitMask = fieldNodeCategory
         coin.physicsBody?.velocity = CGVectorMake(-100,0)
         
         self.addChild(coin)
@@ -395,6 +401,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Add candy powerup
+    func addCandy() {
+        
+
+    }
+    
+    // Function to add a magnetic force for some time
+    func addForce(x:CGFloat, y:CGFloat) {
+        
+        // Sets up field force as radial gravity
+        fieldNode = SKFieldNode.radialGravityField()
+        fieldNode.enabled = true
+        fieldNode.position = CGPoint(x: x, y: y)
+        fieldNode.strength = 0.01 // increase for more power
+        //fieldNode.falloff = 1000.0
+        fieldNode.categoryBitMask = fieldNodeCategory
+        
+        self.addChild(fieldNode)
+    }
+    
     // Handles collisions
     func didBeginContact(contact: SKPhysicsContact) {
         
@@ -411,32 +437,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Check for contact between players and coins
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==coinCategory {
-            print("blueCategory and coinCategory contact")
+            //print("blueCategory and coinCategory contact")
             blueScore+=1
-            print("bluePlayerScore is \(blueScore)")
+            //print("bluePlayerScore is \(blueScore)")
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
-            print("redCategory and coinCategory contact")
+            //print("redCategory and coinCategory contact")
             redScore+=1
-            print("redPlayerScore is\(redScore)")
+            //print("redPlayerScore is\(redScore)")
             secondBody.node!.removeFromParent()
         }
         
         // Check for contact between players and bombs
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==bombCategory {
-            print("blueCategory and bombCategory contact")
+            //print("blueCategory and bombCategory contact")
             blueHealth-=1
-            print("blue health is \(blueHealth)")
+            //print("blue health is \(blueHealth)")
             stopBluePlayerTimer() // = true
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
-            print("redCategory and bombCategory contact")
+            //print("redCategory and bombCategory contact")
             redHealth-=1
-            print("red health is \(redHealth)")
+            //print("red health is \(redHealth)")
             stopRedPlayerTimer() // = true
             secondBody.node!.removeFromParent()
         }
@@ -487,6 +513,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
        
+        // For debugging
+        addForce(redPlayer.position.x, y: redPlayer.position.y)
+        
+        //print("force x/y \(fieldNode.position.x) \(fieldNode.position.y)")
+        
         // Check for game over if conditions met
         if blueHealth <= 0 || redHealth <= 0 {
             

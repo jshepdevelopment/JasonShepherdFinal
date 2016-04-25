@@ -70,7 +70,9 @@ class MenuScene: SKScene, UITextFieldDelegate {
             }
             
             // Hide keyboards on touch if needed
-            playerOneNameTextField.resignFirstResponder()
+            if playerOneNameTextField != nil {
+                playerOneNameTextField.resignFirstResponder()
+            }
             if playerTwoNameTextField != nil {
                 playerTwoNameTextField.resignFirstResponder()
             }
