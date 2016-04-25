@@ -9,13 +9,14 @@
 import SpriteKit
 
 class MenuScene: SKScene, UITextFieldDelegate {
-
+    
+    var optionMade = false
     var singleLabel: SKLabelNode!
     var multiLabel: SKLabelNode!
     var playerOneNameTextField: UITextField!
     var playerTwoNameTextField: UITextField!
     
-    let mainLabel = SKLabelNode(fontNamed:"Chalkduster")
+    var mainLabel = SKLabelNode(fontNamed:"Chalkduster")
     var p1NameLabel = SKLabelNode(fontNamed: "Chalkduster")
     var p2NameLabel = SKLabelNode(fontNamed: "Chalkduster")
     let enterNameLabel1 = SKLabelNode(fontNamed: "Chalkduster")
@@ -42,19 +43,26 @@ class MenuScene: SKScene, UITextFieldDelegate {
             let location = touch.locationInNode(self)
             
             // Checks if the single player option is touched
-            if singleLabel.containsPoint(location) {
+            if singleLabel.containsPoint(location) && !optionMade{
+                mainLabel.removeFromParent()
                 singleLabel.removeFromParent()
+                multiLabel.removeFromParent()
                 GlobalVariables.singlePlayer = true
                 print("One player game")
                 getOneName()
+                optionMade = true
             }
             
             // Checks if the multi player option is touched
-            if multiLabel.containsPoint(location) {
+            if multiLabel.containsPoint(location) && !optionMade{
+                mainLabel.removeFromParent()
+                singleLabel.removeFromParent()
+                multiLabel.removeFromParent()
                 GlobalVariables.singlePlayer = false
                 print("Two player game")
                 getOneName()
                 getTwoName()
+                optionMade = true
             }
             if goLabel.containsPoint(location) {
                 print("Game is starting...")
@@ -72,10 +80,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
     // Get name for one player game
     private func getOneName() {
         
-        // Remove existing labels from screen to make room
-        mainLabel.removeFromParent()
-        singleLabel.removeFromParent()
-        multiLabel.removeFromParent()
         
         // Setup textfield for player one name prompt
         playerOneNameTextField = UITextField(frame: CGRectMake(view!.bounds.width / 2 - 160, view!.bounds.height / 2 - 80, 320, 40))

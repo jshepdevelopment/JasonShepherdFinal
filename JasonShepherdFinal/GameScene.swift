@@ -45,8 +45,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bomb: SKNode! = nil
     
     // Define other texture
-    var coinTexture = SKTexture(imageNamed: "candy.png")
+    let coinTexture1 = SKTexture(imageNamed: "coin1.png")
+    let coinTexture2 = SKTexture(imageNamed: "coin2.png")
+    let coinTexture3 = SKTexture(imageNamed: "coin3.png")
+    let coinTexture4 = SKTexture(imageNamed: "coin4.png")
+    let coinTexture5 = SKTexture(imageNamed: "coin5.png")
+    let coinTexture6 = SKTexture(imageNamed: "coin6.png")
+    let coinTexture7 = SKTexture(imageNamed: "coin7.png")
+
+
     var bombTexture = SKTexture(imageNamed: "bomb.png")
+    
+    // Define particle effects    
+    let rocketTrailParticle1 = SKEmitterNode(fileNamed: "RocketTrail.sks")
+    let rocketTrailParticle2 = SKEmitterNode(fileNamed: "RocketTrail.sks")
     
     // Define sprite groups
     let blueCategory: UInt32 = 1
@@ -89,6 +101,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Add player nodes to the view
         self.addChild(bluePlayer)
         self.addChild(redPlayer)
+        
+        // Add some sweet particle fx to the penguins
+        rocketTrailParticle1!.targetNode = self
+        bluePlayer.addChild(rocketTrailParticle1!)
+        rocketTrailParticle2!.targetNode = self
+        redPlayer.addChild(rocketTrailParticle2!)
         
         // Setup and load all buttons
         setupButtons()
@@ -199,14 +217,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
         
         // Assign player physics
-        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: bluePlayerTexture.size().width/2)
         bluePlayer.physicsBody!.dynamic = true
         bluePlayer.physicsBody!.allowsRotation = false
         bluePlayer.physicsBody!.affectedByGravity = false
         bluePlayer.physicsBody!.categoryBitMask = blueCategory
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
         
-        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: redPlayerTexture.size().width/2)
         redPlayer.physicsBody!.dynamic = true
         redPlayer.physicsBody!.allowsRotation = false
         redPlayer.physicsBody!.affectedByGravity = false
@@ -312,12 +330,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Adds coins
     func addCoins() {
         
-        coin = SKSpriteNode(texture: coinTexture)
+        // Make the sprite node
+        coin = SKSpriteNode(texture: coinTexture1)
+        
+        // Set up coin animation
+        let coinAnimation = SKAction.animateWithTextures([coinTexture1, coinTexture2, coinTexture3, coinTexture4, coinTexture5, coinTexture6, coinTexture7, coinTexture6, coinTexture5, coinTexture4, coinTexture3, coinTexture2, coinTexture1], timePerFrame: 0.1)
+        
+        // Add action to object to run indefinately
+        let coinSpin = SKAction.repeatActionForever(coinAnimation)
+        
+        // Start the animation
+        coin.runAction(coinSpin)
+        
+        // Set up random positions
         let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
 
         coin.position = CGPointMake(x,y)
-        coin.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+
+        // Set up physics body
+        coin.physicsBody = SKPhysicsBody(circleOfRadius: coinTexture1.size().width/2)
         coin.physicsBody?.dynamic = true
         coin.physicsBody?.affectedByGravity = false
         coin.physicsBody?.categoryBitMask = coinCategory
@@ -366,6 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Handles collisions
     func didBeginContact(contact: SKPhysicsContact) {
         
+        // Assigns contact.nodes to bodies and makes handling different collisions better
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -380,12 +413,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==coinCategory {
             print("blueCategory and coinCategory contact")
             blueScore+=1
+            print("bluePlayerScore is \(blueScore)")
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
             print("redCategory and coinCategory contact")
             redScore+=1
+            print("redPlayerScore is\(redScore)")
             secondBody.node!.removeFromParent()
         }
         

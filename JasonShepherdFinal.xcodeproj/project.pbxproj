@@ -18,8 +18,10 @@
 		047D04C31CC80ACC00F9074E /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C21CC80ACC00F9074E /* cross.png */; };
 		047D04C51CC80FAB00F9074E /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047D04C41CC80FAB00F9074E /* GameOverScene.swift */; };
 		047D04C91CC8209500F9074E /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C81CC8209500F9074E /* bomb.png */; };
-		047D04CF1CC9651300F9074E /* redpenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04CE1CC9651300F9074E /* redpenguin.png */; };
-		047D04D11CC9652B00F9074E /* bluepenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D01CC9652B00F9074E /* bluepenguin.png */; };
+		047D04D31CC9AF5300F9074E /* redpenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D21CC9AF5300F9074E /* redpenguin.png */; };
+		047D04D51CC9AF7F00F9074E /* bluepenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D41CC9AF7F00F9074E /* bluepenguin.png */; };
+		047D04D81CC9B75D00F9074E /* RocketTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D61CC9B75D00F9074E /* RocketTrail.sks */; };
+		047D04D91CC9B75D00F9074E /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D71CC9B75D00F9074E /* spark.png */; };
 		04A1B0071CBFEEED009559EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B0061CBFEEED009559EE /* AppDelegate.swift */; };
 		04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04A1B0081CBFEEED009559EE /* GameScene.sks */; };
 		04A1B00B1CBFEEED009559EE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B00A1CBFEEED009559EE /* GameScene.swift */; };
@@ -29,6 +31,13 @@
 		04A1B0151CBFEEED009559EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A1B0131CBFEEED009559EE /* LaunchScreen.storyboard */; };
 		04A1B0201CBFEEF7009559EE /* JasonShepherdFinalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B01F1CBFEEF7009559EE /* JasonShepherdFinalTests.swift */; };
 		04A1B02B1CBFEEF7009559EE /* JasonShepherdFinalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1B02A1CBFEEF7009559EE /* JasonShepherdFinalUITests.swift */; };
+		04DBEF7F1CCEA414005BC8E8 /* coin1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF781CCEA414005BC8E8 /* coin1.png */; };
+		04DBEF801CCEA414005BC8E8 /* coin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF791CCEA414005BC8E8 /* coin2.png */; };
+		04DBEF811CCEA414005BC8E8 /* coin3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7A1CCEA414005BC8E8 /* coin3.png */; };
+		04DBEF821CCEA414005BC8E8 /* coin4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7B1CCEA414005BC8E8 /* coin4.png */; };
+		04DBEF831CCEA414005BC8E8 /* coin5.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7C1CCEA414005BC8E8 /* coin5.png */; };
+		04DBEF841CCEA414005BC8E8 /* coin6.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7D1CCEA414005BC8E8 /* coin6.png */; };
+		04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7E1CCEA414005BC8E8 /* coin7.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +69,10 @@
 		047D04C21CC80ACC00F9074E /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		047D04C41CC80FAB00F9074E /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		047D04C81CC8209500F9074E /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb.png; sourceTree = "<group>"; };
-		047D04CE1CC9651300F9074E /* redpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpenguin.png; sourceTree = "<group>"; };
-		047D04D01CC9652B00F9074E /* bluepenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluepenguin.png; sourceTree = "<group>"; };
+		047D04D21CC9AF5300F9074E /* redpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpenguin.png; sourceTree = "<group>"; };
+		047D04D41CC9AF7F00F9074E /* bluepenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluepenguin.png; sourceTree = "<group>"; };
+		047D04D61CC9B75D00F9074E /* RocketTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RocketTrail.sks; sourceTree = "<group>"; };
+		047D04D71CC9B75D00F9074E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		04A1B0031CBFEEEC009559EE /* JasonShepherdFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JasonShepherdFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B0061CBFEEED009559EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04A1B0081CBFEEED009559EE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -77,6 +88,13 @@
 		04A1B0261CBFEEF7009559EE /* JasonShepherdFinalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JasonShepherdFinalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B02A1CBFEEF7009559EE /* JasonShepherdFinalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JasonShepherdFinalUITests.swift; sourceTree = "<group>"; };
 		04A1B02C1CBFEEF7009559EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04DBEF781CCEA414005BC8E8 /* coin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin1.png; sourceTree = "<group>"; };
+		04DBEF791CCEA414005BC8E8 /* coin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin2.png; sourceTree = "<group>"; };
+		04DBEF7A1CCEA414005BC8E8 /* coin3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin3.png; sourceTree = "<group>"; };
+		04DBEF7B1CCEA414005BC8E8 /* coin4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin4.png; sourceTree = "<group>"; };
+		04DBEF7C1CCEA414005BC8E8 /* coin5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin5.png; sourceTree = "<group>"; };
+		04DBEF7D1CCEA414005BC8E8 /* coin6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin6.png; sourceTree = "<group>"; };
+		04DBEF7E1CCEA414005BC8E8 /* coin7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin7.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +125,8 @@
 		04A1AFFA1CBFEEEC009559EE = {
 			isa = PBXGroup;
 			children = (
+				047D04D61CC9B75D00F9074E /* RocketTrail.sks */,
+				047D04D71CC9B75D00F9074E /* spark.png */,
 				04A1B0051CBFEEED009559EE /* JasonShepherdFinal */,
 				04A1B01E1CBFEEF7009559EE /* JasonShepherdFinalTests */,
 				04A1B0291CBFEEF7009559EE /* JasonShepherdFinalUITests */,
@@ -136,8 +156,15 @@
 				047D04C81CC8209500F9074E /* bomb.png */,
 				047D04C01CC7E46100F9074E /* candy.png */,
 				047D04C21CC80ACC00F9074E /* cross.png */,
-				047D04D01CC9652B00F9074E /* bluepenguin.png */,
-				047D04CE1CC9651300F9074E /* redpenguin.png */,
+				04DBEF781CCEA414005BC8E8 /* coin1.png */,
+				04DBEF791CCEA414005BC8E8 /* coin2.png */,
+				04DBEF7A1CCEA414005BC8E8 /* coin3.png */,
+				04DBEF7B1CCEA414005BC8E8 /* coin4.png */,
+				04DBEF7C1CCEA414005BC8E8 /* coin5.png */,
+				04DBEF7D1CCEA414005BC8E8 /* coin6.png */,
+				04DBEF7E1CCEA414005BC8E8 /* coin7.png */,
+				047D04D41CC9AF7F00F9074E /* bluepenguin.png */,
+				047D04D21CC9AF5300F9074E /* redpenguin.png */,
 				04A1B0061CBFEEED009559EE /* AppDelegate.swift */,
 				04A1B0081CBFEEED009559EE /* GameScene.sks */,
 				04A1B00C1CBFEEED009559EE /* GameViewController.swift */,
@@ -277,21 +304,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DBEF7F1CCEA414005BC8E8 /* coin1.png in Resources */,
 				047D04B91CC68DE700F9074E /* right-arrow.png in Resources */,
 				04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */,
-				047D04CF1CC9651300F9074E /* redpenguin.png in Resources */,
+				047D04D81CC9B75D00F9074E /* RocketTrail.sks in Resources */,
+				047D04D31CC9AF5300F9074E /* redpenguin.png in Resources */,
 				04A1B0151CBFEEED009559EE /* LaunchScreen.storyboard in Resources */,
 				047D04BD1CC69F3900F9074E /* blueoval.png in Resources */,
 				047D04BB1CC69EFA00F9074E /* redoval.png in Resources */,
+				04DBEF811CCEA414005BC8E8 /* coin3.png in Resources */,
+				04DBEF841CCEA414005BC8E8 /* coin6.png in Resources */,
+				04DBEF821CCEA414005BC8E8 /* coin4.png in Resources */,
 				047D04C11CC7E46100F9074E /* candy.png in Resources */,
-				047D04D11CC9652B00F9074E /* bluepenguin.png in Resources */,
+				04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */,
+				047D04D51CC9AF7F00F9074E /* bluepenguin.png in Resources */,
+				04DBEF801CCEA414005BC8E8 /* coin2.png in Resources */,
 				047D04C31CC80ACC00F9074E /* cross.png in Resources */,
 				047D04B51CC68DA200F9074E /* left-arrow.png in Resources */,
 				047D04B31CC68B9400F9074E /* up-arrow.png in Resources */,
+				04DBEF831CCEA414005BC8E8 /* coin5.png in Resources */,
 				04A1B0121CBFEEED009559EE /* Assets.xcassets in Resources */,
 				04A1B0101CBFEEED009559EE /* Main.storyboard in Resources */,
 				047D04B71CC68DB100F9074E /* down-arrow.png in Resources */,
 				047D04C91CC8209500F9074E /* bomb.png in Resources */,
+				047D04D91CC9B75D00F9074E /* spark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

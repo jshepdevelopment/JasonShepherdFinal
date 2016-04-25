@@ -12,7 +12,7 @@ import SpriteKit
 // Define a struct to hold some global variables
 struct GlobalVariables {
     static var inMenu = true
-    static var singlePlayer = true
+    static var singlePlayer = false
     static var blueScore = 0
     static var redScore = 0
     static var winner = 0 // 0 is tie game, 1 is blue winner, 2 is red winner
@@ -28,7 +28,6 @@ class GameViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-              
         
         //if let scene = GameScene(fileNamed:"GameScene") {
         //if let scene = MenuScene(size: view!.bounds.size) {
