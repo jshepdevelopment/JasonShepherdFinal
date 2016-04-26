@@ -10,12 +10,13 @@ import SpriteKit
 
 class MenuScene: SKScene, UITextFieldDelegate {
     
-    var optionMade = false
+    // UI labels and textfields for name input
     var singleLabel: SKLabelNode!
     var multiLabel: SKLabelNode!
     var playerOneNameTextField: UITextField!
     var playerTwoNameTextField: UITextField!
     
+    // UI Labels for menu
     var mainLabel = SKLabelNode(fontNamed:"Chalkduster")
     var p1NameLabel = SKLabelNode(fontNamed: "Chalkduster")
     var p2NameLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -26,12 +27,26 @@ class MenuScene: SKScene, UITextFieldDelegate {
     
     // Load menu view
     override func didMoveToView(view: SKView) {
-        mainLabel.text = "Battle Penguins"
-        mainLabel.fontSize = 35
-        mainLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ) + 85)
-        self.addChild(mainLabel)
         
-        addButtons()
+        super.didMoveToView(view)
+        
+        // Reset global variables if it happens to be a continued game
+        GlobalVariables.blueScore = 0
+        GlobalVariables.redScore = 0
+        GlobalVariables.blueHealth = 3
+        GlobalVariables.redHealth = 3
+        
+        // Add buttons
+        if !GlobalVariables.optionMade {
+            // Add menu label
+            mainLabel.text = "Battle Penguins"
+            
+            mainLabel.fontSize = 35
+            mainLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY + 85)//+ 85)
+            self.addChild(mainLabel)
+            print("self.view.bounds.midX and midY: \(self.view!.bounds.midX) \(self.view!.bounds.midY)")
+            addButtons()
+        }
         //if getPlayerOneName
         
     }
@@ -39,31 +54,38 @@ class MenuScene: SKScene, UITextFieldDelegate {
     // Check for menu touches
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+        // Gets touches
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
             // Checks if the single player option is touched
-            if singleLabel.containsPoint(location) && !optionMade{
+            if singleLabel.containsPoint(location) && !GlobalVariables.optionMade {
                 mainLabel.removeFromParent()
                 singleLabel.removeFromParent()
                 multiLabel.removeFromParent()
                 GlobalVariables.singlePlayer = true
                 print("One player game")
+                GlobalVariables.optionMade = true
+                GlobalVariables.onePlayerGame = true
                 getOneName()
-                optionMade = true
+                
             }
             
             // Checks if the multi player option is touched
-            if multiLabel.containsPoint(location) && !optionMade{
+            if multiLabel.containsPoint(location) && !GlobalVariables.optionMade {
                 mainLabel.removeFromParent()
                 singleLabel.removeFromParent()
                 multiLabel.removeFromParent()
                 GlobalVariables.singlePlayer = false
                 print("Two player game")
+                GlobalVariables.optionMade = true
+                GlobalVariables.twoPlayerGame = true
                 getOneName()
                 getTwoName()
-                optionMade = true
+                
             }
+           
+            // Checks if begin button is touched
             if goLabel.containsPoint(location) {
                 print("Game is starting...")
                 startGame()
@@ -81,7 +103,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
     
     // Get name for one player game
     private func getOneName() {
-        
         
         // Setup textfield for player one name prompt
         playerOneNameTextField = UITextField(frame: CGRectMake(view!.bounds.width / 2 - 160, view!.bounds.height / 2 - 80, 320, 40))
@@ -220,21 +241,35 @@ class MenuScene: SKScene, UITextFieldDelegate {
         }
     }
     
+    // Function to start game
     private func startGame() {
         
-        // Assign global names
-        GlobalVariables.playerOneName = p1NameLabel.text
+        // Reset option made if continued game is needed
         
-        // Remove textfields before starting game
-        playerOneNameTextField.removeFromSuperview()
-        if playerTwoNameTextField != nil {
-            GlobalVariables.playerTwoName = p2NameLabel.text!
-            playerTwoNameTextField.removeFromSuperview()
+        // Assign global names and remove textfields based on game type
+        if GlobalVariables.onePlayerGame {
+            if playerOneNameTextField != nil {
+                GlobalVariables.playerOneName = p1NameLabel.text
+                playerOneNameTextField.removeFromSuperview()
+            }
+            GlobalVariables.onePlayerGame = false // Reset for next game if needed
+        }
+        if GlobalVariables.twoPlayerGame {
+            if playerTwoNameTextField != nil {
+                GlobalVariables.playerTwoName = p2NameLabel.text!
+                playerTwoNameTextField.removeFromSuperview()
+                GlobalVariables.playerOneName = p1NameLabel.text
+                playerOneNameTextField.removeFromSuperview()
+                
+            }
+            GlobalVariables.twoPlayerGame = false // Reset for next game if needed
         }
         
+        // send to console for debugging
         print("Player one is \(GlobalVariables.playerOneName)")
         print("Player two is \(GlobalVariables.playerTwoName)")
         
+        // Transistion to game scene
         let gameScene = GameScene(fileNamed: "GameScene")
         let transition = SKTransition.fadeWithDuration(0.15)
         

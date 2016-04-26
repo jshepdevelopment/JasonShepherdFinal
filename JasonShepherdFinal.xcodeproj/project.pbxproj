@@ -38,6 +38,8 @@
 		04DBEF831CCEA414005BC8E8 /* coin5.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7C1CCEA414005BC8E8 /* coin5.png */; };
 		04DBEF841CCEA414005BC8E8 /* coin6.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7D1CCEA414005BC8E8 /* coin6.png */; };
 		04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7E1CCEA414005BC8E8 /* coin7.png */; };
+		04DBEF881CCF0CB5005BC8E8 /* background1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF861CCF0CB5005BC8E8 /* background1.png */; };
+		04DBEF891CCF0CB5005BC8E8 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF871CCF0CB5005BC8E8 /* background2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		04DBEF7C1CCEA414005BC8E8 /* coin5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin5.png; sourceTree = "<group>"; };
 		04DBEF7D1CCEA414005BC8E8 /* coin6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin6.png; sourceTree = "<group>"; };
 		04DBEF7E1CCEA414005BC8E8 /* coin7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin7.png; sourceTree = "<group>"; };
+		04DBEF861CCF0CB5005BC8E8 /* background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background1.png; sourceTree = "<group>"; };
+		04DBEF871CCF0CB5005BC8E8 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,8 @@
 		04A1B0051CBFEEED009559EE /* JasonShepherdFinal */ = {
 			isa = PBXGroup;
 			children = (
+				04DBEF861CCF0CB5005BC8E8 /* background1.png */,
+				04DBEF871CCF0CB5005BC8E8 /* background2.png */,
 				047D04B21CC68B9400F9074E /* up-arrow.png */,
 				047D04B61CC68DB100F9074E /* down-arrow.png */,
 				047D04B41CC68DA200F9074E /* left-arrow.png */,
@@ -316,6 +322,7 @@
 				04DBEF841CCEA414005BC8E8 /* coin6.png in Resources */,
 				04DBEF821CCEA414005BC8E8 /* coin4.png in Resources */,
 				047D04C11CC7E46100F9074E /* candy.png in Resources */,
+				04DBEF891CCF0CB5005BC8E8 /* background2.png in Resources */,
 				04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */,
 				047D04D51CC9AF7F00F9074E /* bluepenguin.png in Resources */,
 				04DBEF801CCEA414005BC8E8 /* coin2.png in Resources */,
@@ -327,6 +334,7 @@
 				04A1B0101CBFEEED009559EE /* Main.storyboard in Resources */,
 				047D04B71CC68DB100F9074E /* down-arrow.png in Resources */,
 				047D04C91CC8209500F9074E /* bomb.png in Resources */,
+				04DBEF881CCF0CB5005BC8E8 /* background1.png in Resources */,
 				047D04D91CC9B75D00F9074E /* spark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

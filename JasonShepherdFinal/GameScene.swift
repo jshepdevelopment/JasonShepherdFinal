@@ -53,9 +53,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinTexture5 = SKTexture(imageNamed: "coin5.png")
     let coinTexture6 = SKTexture(imageNamed: "coin6.png")
     let coinTexture7 = SKTexture(imageNamed: "coin7.png")
-
-
+    let candyTexture = SKTexture(imageNamed: "candy.png")
     var bombTexture = SKTexture(imageNamed: "bomb.png")
+    let bg1Texture = SKTexture(imageNamed: "background1.png")
+    let bg2Texture = SKTexture(imageNamed: "background2.png")
     
     // Define particle effects    
     let rocketTrailParticle1 = SKEmitterNode(fileNamed: "RocketTrail.sks")
@@ -69,12 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let fieldNodeCategory: UInt32 = 0x1 << 5//5
     let noFieldCategory: UInt32 = 0x1 << 6//6
     
-    // Vars to store red and blue score and health
-    var blueScore = 0
-    var redScore = 0
-    var blueHealth = 3
-    var redHealth = 3
-    
+    // Check to stop players after losing health
     var stopBluePlayer = false
     var stopRedPlayer = false
     
@@ -97,6 +93,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Setup physics world
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVectorMake(0, 0)
+        
+        // Setup parallax background
+        // Adding static background first
+        //let bg1 = SKSpriteNode(texture: bg1Texture)
+        //bg1.size.height = self.size.height
+        //bg1.size.width = self.size.width
+        //bg1.position = CGPointMake(self.size.width/2, self.size.height/2)
+        //bg1.zPosition = -5
+        //self.addChild(bg1)
+        
+        scrollBackground(bg1Texture, scrollSpeed: 0.08, bgzPosition: -3)
+        scrollBackground(bg2Texture, scrollSpeed: 0.02, bgzPosition: -2)
+        scrollBackground(bg2Texture, scrollSpeed: 0.005, bgzPosition: -1)
+
         
         // Setup and load players
         setupPlayers()
@@ -187,20 +197,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redBtnRight = SKSpriteNode(texture: btnTextureLeft)
        
         // Assign button positions
-        blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+100, y: scene!.view!.bounds.minY + 80)
-        blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+100, y: scene!.view!.bounds.minY + 30)
-        blueBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+50, y: scene!.view!.bounds.minY + 30)
-        blueBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)+150, y: scene!.view!.bounds.minY + 30)
+        blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 80)
+        blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 30)
+        blueBtnLeft.position = CGPoint(x: CGRectGetMinX(scene!.view!.frame)+50, y: scene!.view!.bounds.minY + 30)
+        blueBtnRight.position = CGPoint(x: CGRectGetMaxX(scene!.view!.frame)-50, y: scene!.view!.bounds.minY + 30)
         blueBtnUp.zPosition = 10
         blueBtnDown.zPosition = 10
         blueBtnLeft.zPosition = 10
         blueBtnRight.zPosition = 10
         
         // Assign button positions
-        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-100, y: scene!.view!.bounds.maxY - 80)
-        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-100, y: scene!.view!.bounds.maxY - 30)
-        redBtnLeft.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY - 30)
-        redBtnRight.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame)-150, y: scene!.view!.bounds.maxY - 30)
+        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 80)
+        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 30)
+        redBtnLeft.position = CGPoint(x: CGRectGetMaxX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY - 30)
+        redBtnRight.position = CGPoint(x: CGRectGetMinX(scene!.view!.frame)+50, y: scene!.view!.bounds.maxY - 30)
         redBtnUp.zPosition = 10
         redBtnDown.zPosition = 10
         redBtnLeft.zPosition = 10
@@ -220,15 +230,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
         
         // Assign player physics
-        bluePlayer.physicsBody = SKPhysicsBody(circleOfRadius: bluePlayerTexture.size().width/2)
+        bluePlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(90, 38))//circleOfRadius: bluePlayerTexture.size().height/2)
         bluePlayer.physicsBody!.dynamic = true
         bluePlayer.physicsBody!.allowsRotation = false
         bluePlayer.physicsBody!.affectedByGravity = false
         bluePlayer.physicsBody!.categoryBitMask = blueCategory
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
         bluePlayer.physicsBody!.fieldBitMask = noFieldCategory
-        
-        redPlayer.physicsBody = SKPhysicsBody(circleOfRadius: redPlayerTexture.size().width/2)
+    
+        redPlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(90, 38))//CGRectMake(0, 0, 60, 30))//SKPhysicsBody(circleOfRadius: redPlayerTexture.size().height/2)
         redPlayer.physicsBody!.dynamic = true
         redPlayer.physicsBody!.allowsRotation = false
         redPlayer.physicsBody!.affectedByGravity = false
@@ -240,12 +250,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueNameLabel.fontName = "Chalkduster"
         blueNameLabel.fontSize = 25
         blueNameLabel.text = GlobalVariables.playerOneName
-        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+60)
+        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+100)
         self.addChild(blueNameLabel)
         redNameLabel.fontName = "Chalkduster"
         redNameLabel.fontSize = 25
         redNameLabel.text = GlobalVariables.playerTwoName
-        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-60)
+        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-100)
         redNameLabel.xScale = redNameLabel.xScale * -1
         redNameLabel.yScale = redNameLabel.yScale * -1
         self.addChild(redNameLabel)
@@ -268,8 +278,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Update scores
     func updateScores() {
-        redScoreLabel.text = String(redScore)
-        blueScoreLabel.text = String(blueScore)
+        redScoreLabel.text = String(GlobalVariables.redScore)
+        blueScoreLabel.text = String(GlobalVariables.blueScore)
     }
     
     // Function to implement some simple AI
@@ -348,13 +358,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.runAction(coinSpin)
         
         // Set up random positions
-        let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
+        let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(size.width))//(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
 
         coin.position = CGPointMake(x,y)
 
         // Set up physics body
-        coin.physicsBody = SKPhysicsBody(circleOfRadius: coinTexture1.size().width/2)
+        coin.physicsBody = SKPhysicsBody(circleOfRadius: 32)
         coin.physicsBody?.dynamic = true
         coin.physicsBody?.affectedByGravity = true
         coin.physicsBody?.categoryBitMask = coinCategory
@@ -378,16 +388,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Assign texture and position
         bomb = SKSpriteNode(texture: bombTexture)
-        let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(scene!.view!.bounds.maxX))
+        let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(size.width))//(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
         bomb.position = CGPointMake(x,y)
         
         // Assign physics body attributes
-        bomb.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        bomb.physicsBody = SKPhysicsBody(circleOfRadius: 32)
         bomb.physicsBody?.dynamic = true
-        bomb.physicsBody?.affectedByGravity = false
+        bomb.physicsBody?.affectedByGravity = true
         bomb.physicsBody?.categoryBitMask = bombCategory
         bomb.physicsBody?.contactTestBitMask = blueCategory | redCategory
+        bomb.physicsBody?.fieldBitMask = noFieldCategory
         bomb.physicsBody?.velocity = CGVectorMake(-100,0)
         
         self.addChild(bomb)
@@ -414,8 +425,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         fieldNode = SKFieldNode.radialGravityField()
         fieldNode.enabled = true
         fieldNode.position = CGPoint(x: x, y: y)
-        fieldNode.strength = 0.01 // increase for more power
-        //fieldNode.falloff = 1000.0
+        fieldNode.region = SKRegion(radius: 200.0)
+        fieldNode.strength = 0.05 // increase for more power
         fieldNode.categoryBitMask = fieldNodeCategory
         
         self.addChild(fieldNode)
@@ -438,31 +449,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Check for contact between players and coins
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==coinCategory {
             //print("blueCategory and coinCategory contact")
-            blueScore+=1
-            //print("bluePlayerScore is \(blueScore)")
+            GlobalVariables.blueScore+=1
+            print("bluePlayerScore is \(GlobalVariables.blueScore)")
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
             //print("redCategory and coinCategory contact")
-            redScore+=1
-            //print("redPlayerScore is\(redScore)")
+            GlobalVariables.redScore+=1
+            print("redPlayerScore is \(GlobalVariables.redScore)")
             secondBody.node!.removeFromParent()
         }
         
         // Check for contact between players and bombs
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==bombCategory {
             //print("blueCategory and bombCategory contact")
-            blueHealth-=1
-            //print("blue health is \(blueHealth)")
+            GlobalVariables.blueHealth-=1
+            print("blue health is \(GlobalVariables.blueHealth)")
             stopBluePlayerTimer() // = true
             secondBody.node!.removeFromParent()
             
         }
         if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
             //print("redCategory and bombCategory contact")
-            redHealth-=1
-            //print("red health is \(redHealth)")
+            GlobalVariables.redHealth-=1
+            print("red health is \(GlobalVariables.redHealth)")
             stopRedPlayerTimer() // = true
             secondBody.node!.removeFromParent()
         }
@@ -494,14 +505,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Start game over
     func gameOver() {
         
+        print("Game over started. Transition to Game Over Scene")
+        
         // Invalidate timers
         coinTimer.invalidate()
         bombTimer.invalidate()
         
         // Send scores to game over screen
-        GlobalVariables.blueScore = blueScore
-        GlobalVariables.redScore = redScore
-        
+        //GlobalVariables.blueScore = blueScore
+        //GlobalVariables.redScore = redScore
+
         // Transisition into game over scene
         let gameOverScene = GameOverScene(size: view!.bounds.size)
         let transition = SKTransition.fadeWithDuration(0.15)
@@ -510,25 +523,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view!.presentScene(gameOverScene, transition: transition)
     }
     
+    // Scrolling background
+    func scrollBackground(backgroundTexture: SKTexture, scrollSpeed: CGFloat, bgzPosition: CGFloat) {
+        
+        // Moves from left to right.
+        let moveBackground = SKAction.moveByX(-backgroundTexture.size().width, y: 0, duration: NSTimeInterval(scrollSpeed * backgroundTexture.size().width))
+        
+        // Resets on right side
+        let resetBackGround = SKAction.moveByX(backgroundTexture.size().width, y: 0, duration: 0.0)
+        
+        // Move forever
+        let moveBackgoundForever = SKAction.repeatActionForever(SKAction.sequence([moveBackground, resetBackGround]))
+        
+        // This loop makes alignment from end to end
+        for var i:CGFloat = 0; i<2 + self.frame.size.width / (backgroundTexture.size().width); ++i {
+            let sprite = SKSpriteNode(texture: backgroundTexture)
+            sprite.yScale = 3.0
+            sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
+            sprite.zPosition = bgzPosition
+            
+            sprite.runAction(moveBackgoundForever)
+            self.addChild(sprite)
+        }
+    }
+    
     // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
        
         // For debugging
-        addForce(redPlayer.position.x, y: redPlayer.position.y)
+        //addForce(redPlayer.position.x, y: redPlayer.position.y)
+
         
         //print("force x/y \(fieldNode.position.x) \(fieldNode.position.y)")
         
         // Check for game over if conditions met
-        if blueHealth <= 0 || redHealth <= 0 {
+        if GlobalVariables.blueHealth <= 0 || GlobalVariables.redHealth <= 0 {
             
             // Check for winner according to health
-            if blueHealth > redHealth {
+            if GlobalVariables.blueHealth > GlobalVariables.redHealth {
                 GlobalVariables.winner = 1 // blue winner
             }
-            if redHealth > blueHealth {
+            if GlobalVariables.redHealth > GlobalVariables.blueHealth {
                 GlobalVariables.winner = 2 // red winner
             }
-            if blueHealth == redHealth {
+            if GlobalVariables.blueHealth == GlobalVariables.redHealth {
                 GlobalVariables.winner = 0 // tie game
             }
             
