@@ -17,10 +17,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var redNameLabel = SKLabelNode()
     
     // Define button nodes
-    var blueBtnUp: SKNode! = nil
-    var blueBtnDown: SKNode! = nil
-    var blueBtnLeft: SKNode! = nil
-    var blueBtnRight: SKNode! = nil
+    var blueBtnUp: SKSpriteNode! = nil //SKNode! = nil
+    var blueBtnDown: SKSpriteNode! = nil //SKNode! = nil
+    var blueBtnLeft: SKSpriteNode! = nil //SKNode! = nil
+    var blueBtnRight:SKSpriteNode! = nil // SKNode! = nil
     var redBtnUp: SKNode! = nil
     var redBtnDown: SKNode! = nil
     var redBtnLeft: SKNode! = nil
@@ -31,6 +31,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let btnTextureDown = SKTexture(imageNamed: "down-arrow.png")
     let btnTextureLeft = SKTexture(imageNamed: "left-arrow.png")
     let btnTextureRight = SKTexture(imageNamed: "right-arrow.png")
+    
+    let btnTextureUpOn = SKTexture(imageNamed: "up-arrow-on.png")
+    let btnTextureDownOn = SKTexture(imageNamed: "down-arrow-on.png")
+    let btnTextureLeftOn = SKTexture(imageNamed: "left-arrow-on.png")
+    let btnTextureRightOn = SKTexture(imageNamed: "right-arrow-on.png")
     
     // Define player nodes
     var bluePlayer: SKNode! = nil
@@ -61,6 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Define particle effects    
     let rocketTrailParticle1 = SKEmitterNode(fileNamed: "RocketTrail.sks")
     let rocketTrailParticle2 = SKEmitterNode(fileNamed: "RocketTrail.sks")
+    let bombHitParticle = SKEmitterNode(fileNamed: "bombHit.sks")
+    let coinHitParticle = SKEmitterNode(fileNamed: "CollectCoin.sks")
     
     // Define sprite groups
     let blueCategory: UInt32 = 1
@@ -97,21 +104,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Setup parallax background
         // Adding static background first
         //let bg1 = SKSpriteNode(texture: bg1Texture)
-        //bg1.size.height = self.size.height
+        //bg1Texture.size.height = self.size.height
         //bg1.size.width = self.size.width
         //bg1.position = CGPointMake(self.size.width/2, self.size.height/2)
+        //bg1.setScale(2)
         //bg1.zPosition = -5
         //self.addChild(bg1)
         
-        scrollBackground(bg1Texture, scrollSpeed: 0.08, bgzPosition: -3)
+        scrollBackground(bg1Texture, scrollSpeed: 0.50, bgzPosition: -3)
         scrollBackground(bg2Texture, scrollSpeed: 0.02, bgzPosition: -2)
         scrollBackground(bg2Texture, scrollSpeed: 0.005, bgzPosition: -1)
 
-        
         // Setup and load players
         setupPlayers()
         
         // Add player nodes to the view
+        bluePlayer.zPosition = -1
+        redPlayer.zPosition = -1
         self.addChild(bluePlayer)
         self.addChild(redPlayer)
         
@@ -130,11 +139,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(blueBtnLeft)
         self.addChild(blueBtnRight)
         
-        self.addChild(redBtnUp)
-        self.addChild(redBtnDown)
-        self.addChild(redBtnLeft)
-        self.addChild(redBtnRight)
-        
+        // Only add second player buttons if it is not single player game
+        if GlobalVariables.singlePlayer == false {
+            self.addChild(redBtnUp)
+            self.addChild(redBtnDown)
+            self.addChild(redBtnLeft)
+            self.addChild(redBtnRight)
+        }
         coinTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.addCoins), userInfo: nil, repeats: true)
         bombTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(GameScene.addBombs), userInfo: nil, repeats: true)
         
@@ -151,6 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !stopBluePlayer {
                 // Check if the touch locations are within button bounds
                 if blueBtnUp.containsPoint(location) {
+                    blueBtnUp.texture = btnTextureUpOn
                     bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
                 }
                 if blueBtnDown.containsPoint(location) {
@@ -164,7 +176,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            if !stopRedPlayer {
+            
+            if !stopRedPlayer && GlobalVariables.singlePlayer == false {
+                if redBtnUp.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                }
+                if redBtnDown.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+                }
+                if redBtnLeft.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                }
+                if redBtnRight.containsPoint(location) {
+                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                }
+            }
+        }
+    }
+    
+    // Overriding touchesBegan to detect screen touches
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        for touch: AnyObject in touches {
+            
+            // Loop through the touches in event
+            let location = touch.locationInNode(self)
+            
+            if !stopBluePlayer {
+                // Check if the touch locations are within button bounds
+                if blueBtnUp.containsPoint(location) {
+                    blueBtnUp.texture = btnTextureUp
+                }
+                if blueBtnDown.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                }
+                if blueBtnLeft.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                }
+                if blueBtnRight.containsPoint(location) {
+                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                }
+            }
+            
+            
+            if !stopRedPlayer && GlobalVariables.singlePlayer == false {
                 if redBtnUp.containsPoint(location) {
                     redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
                 }
@@ -190,12 +245,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueBtnLeft = SKSpriteNode(texture: btnTextureLeft)
         blueBtnRight = SKSpriteNode(texture: btnTextureRight)
         
-        // Assign as SKSpriteNodes and load textures -- red buttons are inverted :)
-        redBtnUp = SKSpriteNode(texture: btnTextureDown)
-        redBtnDown = SKSpriteNode(texture: btnTextureUp)
-        redBtnLeft = SKSpriteNode(texture: btnTextureRight)
-        redBtnRight = SKSpriteNode(texture: btnTextureLeft)
-       
+        // Only assign second player buttons if game is multiplayer
+        if GlobalVariables.singlePlayer == false {
+            // Assign as SKSpriteNodes and load textures -- red buttons are inverted :)
+            redBtnUp = SKSpriteNode(texture: btnTextureDown)
+            redBtnDown = SKSpriteNode(texture: btnTextureUp)
+            redBtnLeft = SKSpriteNode(texture: btnTextureRight)
+            redBtnRight = SKSpriteNode(texture: btnTextureLeft)
+        }
         // Assign button positions
         blueBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 80)
         blueBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 30)
@@ -206,15 +263,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueBtnLeft.zPosition = 10
         blueBtnRight.zPosition = 10
         
+        // Only assign if not a single player game
+        if GlobalVariables.singlePlayer == false {
         // Assign button positions
-        redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 80)
-        redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 30)
-        redBtnLeft.position = CGPoint(x: CGRectGetMaxX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY - 30)
-        redBtnRight.position = CGPoint(x: CGRectGetMinX(scene!.view!.frame)+50, y: scene!.view!.bounds.maxY - 30)
-        redBtnUp.zPosition = 10
-        redBtnDown.zPosition = 10
-        redBtnLeft.zPosition = 10
-        redBtnRight.zPosition = 10
+            redBtnUp.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 80)
+            redBtnDown.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 30)
+            redBtnLeft.position = CGPoint(x: CGRectGetMaxX(scene!.view!.frame)-50, y: scene!.view!.bounds.maxY - 30)
+            redBtnRight.position = CGPoint(x: CGRectGetMinX(scene!.view!.frame)+50, y: scene!.view!.bounds.maxY - 30)
+            redBtnUp.zPosition = 10
+            redBtnDown.zPosition = 10
+            redBtnLeft.zPosition = 10
+            redBtnRight.zPosition = 10
+        }
         
     }
     
@@ -230,7 +290,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
         
         // Assign player physics
-        bluePlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(90, 38))//circleOfRadius: bluePlayerTexture.size().height/2)
+        bluePlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(50, 30))//circleOfRadius: bluePlayerTexture.size().height/2)
         bluePlayer.physicsBody!.dynamic = true
         bluePlayer.physicsBody!.allowsRotation = false
         bluePlayer.physicsBody!.affectedByGravity = false
@@ -238,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
         bluePlayer.physicsBody!.fieldBitMask = noFieldCategory
     
-        redPlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(90, 38))//CGRectMake(0, 0, 60, 30))//SKPhysicsBody(circleOfRadius: redPlayerTexture.size().height/2)
+        redPlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(50, 30))//CGRectMake(0, 0, 60, 30))//SKPhysicsBody(circleOfRadius: redPlayerTexture.size().height/2)
         redPlayer.physicsBody!.dynamic = true
         redPlayer.physicsBody!.allowsRotation = false
         redPlayer.physicsBody!.affectedByGravity = false
@@ -364,7 +424,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.position = CGPointMake(x,y)
 
         // Set up physics body
-        coin.physicsBody = SKPhysicsBody(circleOfRadius: 32)
+        coin.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         coin.physicsBody?.dynamic = true
         coin.physicsBody?.affectedByGravity = true
         coin.physicsBody?.categoryBitMask = coinCategory
@@ -393,13 +453,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bomb.position = CGPointMake(x,y)
         
         // Assign physics body attributes
-        bomb.physicsBody = SKPhysicsBody(circleOfRadius: 32)
+        bomb.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         bomb.physicsBody?.dynamic = true
         bomb.physicsBody?.affectedByGravity = true
         bomb.physicsBody?.categoryBitMask = bombCategory
         bomb.physicsBody?.contactTestBitMask = blueCategory | redCategory
         bomb.physicsBody?.fieldBitMask = noFieldCategory
         bomb.physicsBody?.velocity = CGVectorMake(-100,0)
+        
+        bomb.runAction(SKAction.rotateByAngle(45, duration: 5))
         
         self.addChild(bomb)
         
@@ -451,14 +513,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("blueCategory and coinCategory contact")
             GlobalVariables.blueScore+=1
             print("bluePlayerScore is \(GlobalVariables.blueScore)")
-            secondBody.node!.removeFromParent()
+            if secondBody.node != nil {
+                secondBody.node!.removeFromParent()
+            }
+            if coinHitParticle != nil {
+                coinHitParticle?.removeFromParent() // Removes existing coinhit particle
+            }
+            coinHitParticle!.targetNode = self
+            bluePlayer.addChild(coinHitParticle!)
+            //coinHitParticle?.runAction(SKAction.waitForDuration(1.0)) //Only run for a second
+            //coinHitParticle?.removeFromParent()
+
             
-        }
-        if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
+        } else if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
             //print("redCategory and coinCategory contact")
             GlobalVariables.redScore+=1
             print("redPlayerScore is \(GlobalVariables.redScore)")
-            secondBody.node!.removeFromParent()
+            if secondBody.node != nil {
+                secondBody.node!.removeFromParent()
+            }
+            if coinHitParticle != nil {
+                coinHitParticle?.removeFromParent() // Removes existing coinhit particle
+            }
+            coinHitParticle!.targetNode = self
+            redPlayer.addChild(coinHitParticle!)
+            //coinHitParticle?.runAction(SKAction.waitForDuration(1.0)) //Only run for a second
+            //coinHitParticle?.removeFromParent()
         }
         
         // Check for contact between players and bombs
@@ -466,16 +546,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //print("blueCategory and bombCategory contact")
             GlobalVariables.blueHealth-=1
             print("blue health is \(GlobalVariables.blueHealth)")
+            if bombHitParticle != nil {
+                bombHitParticle?.removeFromParent() // Removes existing bombhit particle
+            }
+            bombHitParticle!.targetNode = self
+            bluePlayer.addChild(bombHitParticle!)
             stopBluePlayerTimer() // = true
-            secondBody.node!.removeFromParent()
+            if secondBody.node != nil {
+                secondBody.node!.removeFromParent()
+            }
             
-        }
-        if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
+        } else if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
             //print("redCategory and bombCategory contact")
             GlobalVariables.redHealth-=1
             print("red health is \(GlobalVariables.redHealth)")
+            if bombHitParticle != nil {
+                bombHitParticle?.removeFromParent() // Removes existing bombhit particle
+            }
+            bombHitParticle!.targetNode = self
+            redPlayer.addChild(bombHitParticle!)
             stopRedPlayerTimer() // = true
-            secondBody.node!.removeFromParent()
+            if secondBody.node != nil {
+                secondBody.node!.removeFromParent()
+            }
         }
         
     }
@@ -489,6 +582,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Function is called after 3 seconds to allow movement
     func startBluePlayer() {
         stopBluePlayer = false
+        bombHitParticle?.removeFromParent()
     }
     
     // Setup timer to stop red player movement
@@ -500,6 +594,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Function is called after 3 seconds to allow movement
     func startRedPlayer() {
         stopRedPlayer = false
+        bombHitParticle?.removeFromParent()
     }
     
     // Start game over
@@ -538,7 +633,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // This loop makes alignment from end to end
         for var i:CGFloat = 0; i<2 + self.frame.size.width / (backgroundTexture.size().width); ++i {
             let sprite = SKSpriteNode(texture: backgroundTexture)
-            sprite.yScale = 3.0
+            sprite.setScale(2.0)
             sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
             sprite.zPosition = bgzPosition
             

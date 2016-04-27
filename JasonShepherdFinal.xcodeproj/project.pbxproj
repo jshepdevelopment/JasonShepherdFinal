@@ -11,8 +11,6 @@
 		047D04B51CC68DA200F9074E /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04B41CC68DA200F9074E /* left-arrow.png */; };
 		047D04B71CC68DB100F9074E /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04B61CC68DB100F9074E /* down-arrow.png */; };
 		047D04B91CC68DE700F9074E /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04B81CC68DE700F9074E /* right-arrow.png */; };
-		047D04BB1CC69EFA00F9074E /* redoval.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04BA1CC69EFA00F9074E /* redoval.png */; };
-		047D04BD1CC69F3900F9074E /* blueoval.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04BC1CC69F3900F9074E /* blueoval.png */; };
 		047D04BF1CC6CEBA00F9074E /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047D04BE1CC6CEBA00F9074E /* MenuScene.swift */; };
 		047D04C11CC7E46100F9074E /* candy.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C01CC7E46100F9074E /* candy.png */; };
 		047D04C31CC80ACC00F9074E /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C21CC80ACC00F9074E /* cross.png */; };
@@ -40,6 +38,12 @@
 		04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF7E1CCEA414005BC8E8 /* coin7.png */; };
 		04DBEF881CCF0CB5005BC8E8 /* background1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF861CCF0CB5005BC8E8 /* background1.png */; };
 		04DBEF891CCF0CB5005BC8E8 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF871CCF0CB5005BC8E8 /* background2.png */; };
+		04DBEF8D1CCFFE59005BC8E8 /* bombHit.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF8C1CCFFE59005BC8E8 /* bombHit.sks */; };
+		04DBEF8F1CD001CE005BC8E8 /* CollectCoin.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF8E1CD001CE005BC8E8 /* CollectCoin.sks */; };
+		04DBEF911CD0607E005BC8E8 /* up-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF901CD0607E005BC8E8 /* up-arrow-on.png */; };
+		04DBEF931CD06094005BC8E8 /* down-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF921CD06094005BC8E8 /* down-arrow-on.png */; };
+		04DBEF951CD060AF005BC8E8 /* left-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */; };
+		04DBEF971CD060C5005BC8E8 /* right-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +68,6 @@
 		047D04B41CC68DA200F9074E /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = "<group>"; };
 		047D04B61CC68DB100F9074E /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		047D04B81CC68DE700F9074E /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
-		047D04BA1CC69EFA00F9074E /* redoval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redoval.png; sourceTree = "<group>"; };
-		047D04BC1CC69F3900F9074E /* blueoval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueoval.png; sourceTree = "<group>"; };
 		047D04BE1CC6CEBA00F9074E /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		047D04C01CC7E46100F9074E /* candy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = candy.png; sourceTree = "<group>"; };
 		047D04C21CC80ACC00F9074E /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
@@ -99,6 +101,12 @@
 		04DBEF7E1CCEA414005BC8E8 /* coin7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin7.png; sourceTree = "<group>"; };
 		04DBEF861CCF0CB5005BC8E8 /* background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background1.png; sourceTree = "<group>"; };
 		04DBEF871CCF0CB5005BC8E8 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
+		04DBEF8C1CCFFE59005BC8E8 /* bombHit.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bombHit.sks; sourceTree = "<group>"; };
+		04DBEF8E1CD001CE005BC8E8 /* CollectCoin.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CollectCoin.sks; sourceTree = "<group>"; };
+		04DBEF901CD0607E005BC8E8 /* up-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up-arrow-on.png"; sourceTree = "<group>"; };
+		04DBEF921CD06094005BC8E8 /* down-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow-on.png"; sourceTree = "<group>"; };
+		04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow-on.png"; sourceTree = "<group>"; };
+		04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow-on.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +137,8 @@
 		04A1AFFA1CBFEEEC009559EE = {
 			isa = PBXGroup;
 			children = (
+				04DBEF8E1CD001CE005BC8E8 /* CollectCoin.sks */,
+				04DBEF8C1CCFFE59005BC8E8 /* bombHit.sks */,
 				047D04D61CC9B75D00F9074E /* RocketTrail.sks */,
 				047D04D71CC9B75D00F9074E /* spark.png */,
 				04A1B0051CBFEEED009559EE /* JasonShepherdFinal */,
@@ -157,8 +167,10 @@
 				047D04B61CC68DB100F9074E /* down-arrow.png */,
 				047D04B41CC68DA200F9074E /* left-arrow.png */,
 				047D04B81CC68DE700F9074E /* right-arrow.png */,
-				047D04BA1CC69EFA00F9074E /* redoval.png */,
-				047D04BC1CC69F3900F9074E /* blueoval.png */,
+				04DBEF901CD0607E005BC8E8 /* up-arrow-on.png */,
+				04DBEF921CD06094005BC8E8 /* down-arrow-on.png */,
+				04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */,
+				04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */,
 				047D04C81CC8209500F9074E /* bomb.png */,
 				047D04C01CC7E46100F9074E /* candy.png */,
 				047D04C21CC80ACC00F9074E /* cross.png */,
@@ -314,14 +326,17 @@
 				047D04B91CC68DE700F9074E /* right-arrow.png in Resources */,
 				04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */,
 				047D04D81CC9B75D00F9074E /* RocketTrail.sks in Resources */,
+				04DBEF911CD0607E005BC8E8 /* up-arrow-on.png in Resources */,
+				04DBEF971CD060C5005BC8E8 /* right-arrow-on.png in Resources */,
 				047D04D31CC9AF5300F9074E /* redpenguin.png in Resources */,
 				04A1B0151CBFEEED009559EE /* LaunchScreen.storyboard in Resources */,
-				047D04BD1CC69F3900F9074E /* blueoval.png in Resources */,
-				047D04BB1CC69EFA00F9074E /* redoval.png in Resources */,
 				04DBEF811CCEA414005BC8E8 /* coin3.png in Resources */,
+				04DBEF8F1CD001CE005BC8E8 /* CollectCoin.sks in Resources */,
 				04DBEF841CCEA414005BC8E8 /* coin6.png in Resources */,
+				04DBEF931CD06094005BC8E8 /* down-arrow-on.png in Resources */,
 				04DBEF821CCEA414005BC8E8 /* coin4.png in Resources */,
 				047D04C11CC7E46100F9074E /* candy.png in Resources */,
+				04DBEF8D1CCFFE59005BC8E8 /* bombHit.sks in Resources */,
 				04DBEF891CCF0CB5005BC8E8 /* background2.png in Resources */,
 				04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */,
 				047D04D51CC9AF7F00F9074E /* bluepenguin.png in Resources */,
@@ -331,6 +346,7 @@
 				047D04B31CC68B9400F9074E /* up-arrow.png in Resources */,
 				04DBEF831CCEA414005BC8E8 /* coin5.png in Resources */,
 				04A1B0121CBFEEED009559EE /* Assets.xcassets in Resources */,
+				04DBEF951CD060AF005BC8E8 /* left-arrow-on.png in Resources */,
 				04A1B0101CBFEEED009559EE /* Main.storyboard in Resources */,
 				047D04B71CC68DB100F9074E /* down-arrow.png in Resources */,
 				047D04C91CC8209500F9074E /* bomb.png in Resources */,

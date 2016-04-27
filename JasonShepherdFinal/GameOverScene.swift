@@ -36,7 +36,7 @@ class GameOverScene: SKScene {
         
         highScoreLabel.text = "High Scores"
         highScoreLabel.fontSize = 35
-        highScoreLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ) + 175 )
+        highScoreLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMaxY(self.frame ) - 100 )
         self.addChild(highScoreLabel)
         
         playAgainLabel.text = "Play Again?"

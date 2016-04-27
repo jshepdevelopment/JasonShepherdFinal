@@ -13,6 +13,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
     // UI labels and textfields for name input
     var singleLabel: SKLabelNode!
     var multiLabel: SKLabelNode!
+    
     var playerOneNameTextField: UITextField!
     var playerTwoNameTextField: UITextField!
     
