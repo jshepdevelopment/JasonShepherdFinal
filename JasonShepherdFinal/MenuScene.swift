@@ -18,13 +18,19 @@ class MenuScene: SKScene, UITextFieldDelegate {
     var playerTwoNameTextField: UITextField!
     
     // UI Labels for menu
-    var mainLabel = SKLabelNode(fontNamed:"Chalkduster")
+    var mainLabel1 = SKLabelNode(fontNamed:"Chalkduster")
+    var mainLabel2 = SKLabelNode(fontNamed:"Chalkduster")
     var p1NameLabel = SKLabelNode(fontNamed: "Chalkduster")
     var p2NameLabel = SKLabelNode(fontNamed: "Chalkduster")
     let enterNameLabel1 = SKLabelNode(fontNamed: "Chalkduster")
     let enterNameLabel2 = SKLabelNode(fontNamed: "Chalkduster")
     let enterNameLabel3 = SKLabelNode(fontNamed: "Chalkduster")
     let goLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let soundLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let onLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let offLabel = SKLabelNode(fontNamed: "Chalkduster")
+    
+    let bg2 = SKSpriteNode(texture: SKTexture(imageNamed: "bpmenu.png"))
     
     // Load menu view
     override func didMoveToView(view: SKView) {
@@ -39,17 +45,41 @@ class MenuScene: SKScene, UITextFieldDelegate {
         
         // Add buttons
         if !GlobalVariables.optionMade {
-            // Add menu label
-            mainLabel.text = "Battle Penguins"
             
-            mainLabel.fontSize = 35
-            mainLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY + 85)//+ 85)
-            self.addChild(mainLabel)
-            print("self.view.bounds.midX and midY: \(self.view!.bounds.midX) \(self.view!.bounds.midY)")
+            // Adding static background first
+            let bg1 = SKSpriteNode(texture: SKTexture(imageNamed: "background1.png"))
+            //bg1Texture.size.height = self.size.height
+            bg1.size.width = self.size.width
+            bg1.position = CGPointMake(self.size.width/2, self.size.height/2)
+            bg1.setScale(2)
+            bg1.zPosition = -5
+            self.addChild(bg1)
+            
+            // Add scrolling stars to menu
+            scrollBackground(SKTexture(imageNamed: "background2.png"), scrollSpeed: 0.01, bgzPosition: -3)
+            
+            // Add the battle penguin dudes
+            //bg1Texture.size.height = self.size.height
+            bg2.size.width = self.size.width
+            bg2.position = CGPointMake(self.size.width/2, self.view!.bounds.minY+bg2.size.height/2)
+            //bg2.setScale(2)
+            bg2.zPosition = -3
+            self.addChild(bg2)
+            
+            // Add menu label
+            mainLabel1.text = "Battle"
+            mainLabel1.fontSize = 50
+            mainLabel1.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.maxY - 60)//+ 85)
+            self.addChild(mainLabel1)
+            
+            mainLabel2.text = "Penguins!"
+            mainLabel2.fontSize = 50
+            mainLabel2.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.maxY - 110)//+ 85)
+            self.addChild(mainLabel2)
+            
+            // Add the buttons
             addButtons()
         }
-        //if getPlayerOneName
-        
     }
    
     // Check for menu touches
@@ -61,9 +91,14 @@ class MenuScene: SKScene, UITextFieldDelegate {
             
             // Checks if the single player option is touched
             if singleLabel.containsPoint(location) && !GlobalVariables.optionMade {
-                mainLabel.removeFromParent()
+                mainLabel1.removeFromParent()
+                mainLabel2.removeFromParent()
                 singleLabel.removeFromParent()
                 multiLabel.removeFromParent()
+                soundLabel.removeFromParent()
+                onLabel.removeFromParent()
+                offLabel.removeFromParent()
+                bg2.removeFromParent()
                 GlobalVariables.singlePlayer = true
                 print("One player game")
                 GlobalVariables.optionMade = true
@@ -74,9 +109,14 @@ class MenuScene: SKScene, UITextFieldDelegate {
             
             // Checks if the multi player option is touched
             if multiLabel.containsPoint(location) && !GlobalVariables.optionMade {
-                mainLabel.removeFromParent()
+                mainLabel1.removeFromParent()
+                mainLabel2.removeFromParent()
                 singleLabel.removeFromParent()
                 multiLabel.removeFromParent()
+                soundLabel.removeFromParent()
+                onLabel.removeFromParent()
+                offLabel.removeFromParent()
+                bg2.removeFromParent()
                 GlobalVariables.singlePlayer = false
                 print("Two player game")
                 GlobalVariables.optionMade = true
@@ -179,15 +219,30 @@ class MenuScene: SKScene, UITextFieldDelegate {
         singleLabel = SKLabelNode(fontNamed:"Chalkduster")
         singleLabel.text = "One Player"
         singleLabel.fontSize = 35
-        singleLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ))
+        singleLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame ) + 120)
         self.addChild(singleLabel)
         
         // Multi player label / button
         multiLabel = SKLabelNode(fontNamed:"Chalkduster")
         multiLabel.text = "Two Players"
         multiLabel.fontSize = 35
-        multiLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) - 50)
+        multiLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) + 70)
         self.addChild(multiLabel)
+        
+        // Sound label / on off buttons
+        soundLabel.text = "Sound"
+        soundLabel.fontSize = 35
+        soundLabel.position = CGPoint(x:CGRectGetMidX(self.frame)-soundLabel.frame.width/2, y:CGRectGetMidY(self.frame ) - 25)
+        self.addChild(soundLabel)
+        onLabel.text = "On"
+        onLabel.fontSize = 30
+        onLabel.fontColor = UIColor.greenColor()
+        onLabel.position = CGPoint(x:CGRectGetMidX(self.frame)+onLabel.frame.width, y:CGRectGetMidY(self.frame ) - 25)
+        self.addChild(onLabel)
+        offLabel.text = "Off"
+        offLabel.fontSize = 30
+        offLabel.position = CGPoint(x:CGRectGetMidX(self.frame)+offLabel.frame.width*2, y:CGRectGetMidY(self.frame ) - 25)
+        self.addChild(offLabel)
     
     }
     
@@ -276,5 +331,29 @@ class MenuScene: SKScene, UITextFieldDelegate {
         
         gameScene!.scaleMode = .ResizeFill
         view!.presentScene(gameScene!, transition: transition)
+    }
+    
+    // Scrolling background
+    func scrollBackground(backgroundTexture: SKTexture, scrollSpeed: CGFloat, bgzPosition: CGFloat) {
+        
+        // Moves from left to right.
+        let moveBackground = SKAction.moveByX(-backgroundTexture.size().width, y: 0, duration: NSTimeInterval(scrollSpeed * backgroundTexture.size().width))
+        
+        // Resets on right side
+        let resetBackGround = SKAction.moveByX(backgroundTexture.size().width, y: 0, duration: 0.0)
+        
+        // Move forever
+        let moveBackgoundForever = SKAction.repeatActionForever(SKAction.sequence([moveBackground, resetBackGround]))
+        
+        // This loop makes alignment from end to end
+        for var i:CGFloat = 0; i<2 + self.frame.size.width / (backgroundTexture.size().width); ++i {
+            let sprite = SKSpriteNode(texture: backgroundTexture)
+            sprite.setScale(2.0)
+            sprite.position = CGPointMake(i * sprite.size.width, sprite.size.height / 2)
+            sprite.zPosition = bgzPosition
+            
+            sprite.runAction(moveBackgoundForever)
+            self.addChild(sprite)
+        }
     }
 }

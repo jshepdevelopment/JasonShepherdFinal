@@ -44,6 +44,7 @@
 		04DBEF931CD06094005BC8E8 /* down-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF921CD06094005BC8E8 /* down-arrow-on.png */; };
 		04DBEF951CD060AF005BC8E8 /* left-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */; };
 		04DBEF971CD060C5005BC8E8 /* right-arrow-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */; };
+		04DBEF991CD10F96005BC8E8 /* bpmenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEF981CD10F96005BC8E8 /* bpmenu.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		04DBEF921CD06094005BC8E8 /* down-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow-on.png"; sourceTree = "<group>"; };
 		04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow-on.png"; sourceTree = "<group>"; };
 		04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow-on.png"; sourceTree = "<group>"; };
+		04DBEF981CD10F96005BC8E8 /* bpmenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bpmenu.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 		04A1B0051CBFEEED009559EE /* JasonShepherdFinal */ = {
 			isa = PBXGroup;
 			children = (
+				04DBEF981CD10F96005BC8E8 /* bpmenu.png */,
 				04DBEF861CCF0CB5005BC8E8 /* background1.png */,
 				04DBEF871CCF0CB5005BC8E8 /* background2.png */,
 				047D04B21CC68B9400F9074E /* up-arrow.png */,
@@ -344,6 +347,7 @@
 				047D04C31CC80ACC00F9074E /* cross.png in Resources */,
 				047D04B51CC68DA200F9074E /* left-arrow.png in Resources */,
 				047D04B31CC68B9400F9074E /* up-arrow.png in Resources */,
+				04DBEF991CD10F96005BC8E8 /* bpmenu.png in Resources */,
 				04DBEF831CCEA414005BC8E8 /* coin5.png in Resources */,
 				04A1B0121CBFEEED009559EE /* Assets.xcassets in Resources */,
 				04DBEF951CD060AF005BC8E8 /* left-arrow-on.png in Resources */,

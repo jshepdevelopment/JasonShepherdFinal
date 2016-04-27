@@ -20,11 +20,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueBtnUp: SKSpriteNode! = nil //SKNode! = nil
     var blueBtnDown: SKSpriteNode! = nil //SKNode! = nil
     var blueBtnLeft: SKSpriteNode! = nil //SKNode! = nil
-    var blueBtnRight:SKSpriteNode! = nil // SKNode! = nil
-    var redBtnUp: SKNode! = nil
-    var redBtnDown: SKNode! = nil
-    var redBtnLeft: SKNode! = nil
-    var redBtnRight: SKNode! = nil
+    var blueBtnRight: SKSpriteNode! = nil // SKNode! = nil
+    var redBtnUp: SKSpriteNode! = nil //SKNode! = nil
+    var redBtnDown: SKSpriteNode! = nil //SKNode! = nil
+    var redBtnLeft: SKSpriteNode! = nil //SKNode! = nil
+    var redBtnRight: SKSpriteNode! = nil //SKNode! = nil
     
     // Define button textures
     let btnTextureUp = SKTexture(imageNamed: "up-arrow.png")
@@ -86,6 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bombTimer: NSTimer!
     var stopBlueTimer: NSTimer!
     var stopRedTimer: NSTimer!
+    var stopCoinParticleTimer: NSTimer!
     
     // Boolean to handle game over check
     var gameOverFlag = false
@@ -159,6 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Loop through the touches in event
             let location = touch.locationInNode(self)
             
+            // Blue player change button texture and apply impulse to player
             if !stopBluePlayer {
                 // Check if the touch locations are within button bounds
                 if blueBtnUp.containsPoint(location) {
@@ -166,28 +168,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
                 }
                 if blueBtnDown.containsPoint(location) {
+                    blueBtnDown.texture = btnTextureDownOn
                     bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
                 }
                 if blueBtnLeft.containsPoint(location) {
+                    blueBtnLeft.texture = btnTextureLeftOn
                     bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
                 }
                 if blueBtnRight.containsPoint(location) {
+                    blueBtnRight.texture = btnTextureRightOn
                     bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
                 }
             }
             
-            
+            // Red player change button texture and apply impulse to player
             if !stopRedPlayer && GlobalVariables.singlePlayer == false {
                 if redBtnUp.containsPoint(location) {
+                    redBtnUp.texture = btnTextureDownOn
                     redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
                 }
                 if redBtnDown.containsPoint(location) {
+                    redBtnDown.texture = btnTextureUpOn
                     redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
                 }
                 if redBtnLeft.containsPoint(location) {
+                    redBtnLeft.texture = btnTextureRightOn
                     redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
                 }
                 if redBtnRight.containsPoint(location) {
+                    redBtnRight.texture = btnTextureLeftOn
                     redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
                 }
             }
@@ -195,6 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // Overriding touchesBegan to detect screen touches
+    // Touches ended will return button texture to original state
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         for touch: AnyObject in touches {
@@ -202,35 +212,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Loop through the touches in event
             let location = touch.locationInNode(self)
             
+            // Return button texture to original texture on button end
             if !stopBluePlayer {
                 // Check if the touch locations are within button bounds
                 if blueBtnUp.containsPoint(location) {
                     blueBtnUp.texture = btnTextureUp
                 }
                 if blueBtnDown.containsPoint(location) {
-                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                    blueBtnDown.texture = btnTextureDown
                 }
                 if blueBtnLeft.containsPoint(location) {
-                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                    blueBtnLeft.texture = btnTextureLeft
                 }
                 if blueBtnRight.containsPoint(location) {
-                    bluePlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                    blueBtnRight.texture = btnTextureRight
                 }
             }
             
-            
+            // Return button texture to original texture on button end
             if !stopRedPlayer && GlobalVariables.singlePlayer == false {
                 if redBtnUp.containsPoint(location) {
-                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,-10))
+                    redBtnUp.texture = btnTextureDown
                 }
                 if redBtnDown.containsPoint(location) {
-                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(0,10))
+                    redBtnDown.texture = btnTextureUp
                 }
                 if redBtnLeft.containsPoint(location) {
-                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(10,0))
+                    redBtnLeft.texture = btnTextureRight
                 }
                 if redBtnRight.containsPoint(location) {
-                    redPlayer.physicsBody!.applyImpulse(CGVectorMake(-10,0))
+                    redBtnRight.texture = btnTextureLeft
                 }
             }
         }
@@ -286,8 +297,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer = SKSpriteNode(texture: redPlayerTexture)
         
         // Assign player positions
-        bluePlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 100)
-        redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 100)
+        bluePlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.minY + 130)
+        redPlayer.position = CGPoint(x: CGRectGetMidX(scene!.view!.frame), y: scene!.view!.bounds.maxY - 130)
         
         // Assign player physics
         bluePlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(50, 30))//circleOfRadius: bluePlayerTexture.size().height/2)
@@ -310,12 +321,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueNameLabel.fontName = "Chalkduster"
         blueNameLabel.fontSize = 25
         blueNameLabel.text = GlobalVariables.playerOneName
-        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+100)
+        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+80)
         self.addChild(blueNameLabel)
         redNameLabel.fontName = "Chalkduster"
         redNameLabel.fontSize = 25
         redNameLabel.text = GlobalVariables.playerTwoName
-        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-100)
+        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-80)
         redNameLabel.xScale = redNameLabel.xScale * -1
         redNameLabel.yScale = redNameLabel.yScale * -1
         self.addChild(redNameLabel)
@@ -324,12 +335,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueScoreLabel.fontName = "Chalkduster"
         blueScoreLabel.fontSize = 25
         blueScoreLabel.text = "0"
-        blueScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+30)
+        blueScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.minY+80)
         self.addChild(blueScoreLabel)
         redScoreLabel.fontName = "Chalkduster"
         redScoreLabel.fontSize = 25
         redScoreLabel.text = "0"
-        redScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-30)
+        redScoreLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.maxY-80)
         redScoreLabel.xScale = redScoreLabel.xScale * -1
         redScoreLabel.yScale = redScoreLabel.yScale * -1
         self.addChild(redScoreLabel)
@@ -425,7 +436,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // Set up physics body
         coin.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-        coin.physicsBody?.dynamic = true
+        coin.physicsBody?.dynamic = false
         coin.physicsBody?.affectedByGravity = true
         coin.physicsBody?.categoryBitMask = coinCategory
         coin.physicsBody?.contactTestBitMask = blueCategory | redCategory
@@ -477,7 +488,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Add candy powerup
     func addCandy() {
         
-
     }
     
     // Function to add a magnetic force for some time
@@ -534,6 +544,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             if coinHitParticle != nil {
                 coinHitParticle?.removeFromParent() // Removes existing coinhit particle
+                stopCoinParticleTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.stopSparkle), userInfo: nil, repeats: false)
             }
             coinHitParticle!.targetNode = self
             redPlayer.addChild(coinHitParticle!)
@@ -597,6 +608,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bombHitParticle?.removeFromParent()
     }
     
+    // Function is called after 1 second to clear coin collect sparkle effect
+    func stopSparkle() {
+        if coinHitParticle  != nil {
+            coinHitParticle!.removeFromParent()
+        }
+    }
+    
     // Start game over
     func gameOver() {
         
@@ -646,7 +664,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
        
         // For debugging
-        //addForce(redPlayer.position.x, y: redPlayer.position.y)
+        addForce(redPlayer.position.x, y: redPlayer.position.y)
 
         
         //print("force x/y \(fieldNode.position.x) \(fieldNode.position.y)")

@@ -16,6 +16,7 @@ class GameOverScene: SKScene {
     var playAgainLabel = SKLabelNode(fontNamed:"Chalkduster")
     var yesLabel = SKLabelNode(fontNamed:"Chalkduster")
     var noLabel = SKLabelNode(fontNamed:"Chalkduster")
+    var winnerLabel = SKLabelNode(fontNamed:"Chalkduster")
     
     // Store high scores as array of strings
     var highScores = [1,10,20]
@@ -38,6 +39,12 @@ class GameOverScene: SKScene {
         highScoreLabel.fontSize = 35
         highScoreLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMaxY(self.frame ) - 100 )
         self.addChild(highScoreLabel)
+        
+        winnerLabel.text = ""
+        winnerLabel.fontSize = 35
+        winnerLabel.fontColor = UIColor.yellowColor()
+        winnerLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMinY(self.frame ) + 150)
+        self.addChild(winnerLabel)
         
         playAgainLabel.text = "Play Again?"
         playAgainLabel.fontSize = 35
@@ -127,11 +134,14 @@ class GameOverScene: SKScene {
         if GlobalVariables.winner == 1 {
             currentHighScore = GlobalVariables.blueScore
             currentHighScoreName = GlobalVariables.playerOneName
+            winnerLabel.text = "\(GlobalVariables.playerOneName) won!"
 
         }
         if GlobalVariables.winner == 2 {
             currentHighScore = GlobalVariables.redScore
             currentHighScoreName = GlobalVariables.playerTwoName
+            winnerLabel.text = "\(GlobalVariables.playerTwoName) won!"
+           
         }
         
         // High score at 3rd place
