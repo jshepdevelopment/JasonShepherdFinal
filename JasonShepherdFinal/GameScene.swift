@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -15,6 +16,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var redScoreLabel = SKLabelNode()
     var blueNameLabel = SKLabelNode()
     var redNameLabel = SKLabelNode()
+    
+    var gameOverLabel = SKLabelNode()
     
     // Define button nodes
     var blueBtnUp: SKSpriteNode! = nil //SKNode! = nil
@@ -36,6 +39,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let btnTextureDownOn = SKTexture(imageNamed: "down-arrow-on.png")
     let btnTextureLeftOn = SKTexture(imageNamed: "left-arrow-on.png")
     let btnTextureRightOn = SKTexture(imageNamed: "right-arrow-on.png")
+    
+    // Define a coin icon node
+    let blueCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coin1.png")) //SKNode! = nil
+    let redCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coin1.png")) //SKNode! = nil
     
     // Define player nodes
     var bluePlayer: SKNode! = nil
@@ -77,6 +84,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let fieldNodeCategory: UInt32 = 0x1 << 5//5
     let noFieldCategory: UInt32 = 0x1 << 6//6
     
+    // Variables for sound and music
+    var coinCollectSound: NSURL!
+    var bombHitSound: NSURL!
+    var gameOverSound: NSURL!
+    var gameBeginSound: NSURL!
+    var music: NSURL!
+    
+    // Variables for audio
+    var audioPlayer = AVAudioPlayer()
+    var musicPlayer = AVAudioPlayer()
+    
     // Check to stop players after losing health
     var stopBluePlayer = false
     var stopRedPlayer = false
@@ -102,16 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         
-        // Setup parallax background
-        // Adding static background first
-        //let bg1 = SKSpriteNode(texture: bg1Texture)
-        //bg1Texture.size.height = self.size.height
-        //bg1.size.width = self.size.width
-        //bg1.position = CGPointMake(self.size.width/2, self.size.height/2)
-        //bg1.setScale(2)
-        //bg1.zPosition = -5
-        //self.addChild(bg1)
-        
+        // Setup and scroll parallax background
         scrollBackground(bg1Texture, scrollSpeed: 0.50, bgzPosition: -3)
         scrollBackground(bg2Texture, scrollSpeed: 0.02, bgzPosition: -2)
         scrollBackground(bg2Texture, scrollSpeed: 0.005, bgzPosition: -1)
@@ -147,6 +156,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(redBtnLeft)
             self.addChild(redBtnRight)
         }
+        
+        if GlobalVariables.soundOn {
+            // Assign sounds
+            coinCollectSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("coincollected", ofType: "wav")!)
+            bombHitSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("bombhit", ofType: "wav")!)
+            gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gameover", ofType: "wav")!)
+            gameBeginSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamebegin", ofType: "wav")!)
+            
+            // Assign music
+            music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamemusic", ofType: "mp3")!)
+            
+            // Play the game begin sound
+
+            do {
+                try audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            } catch {
+                print("error playing sound")
+            }
+            
+            // Play the music or catch an error
+            do {
+                try musicPlayer = AVAudioPlayer(contentsOfURL: music)
+                musicPlayer.numberOfLoops = -1
+                musicPlayer.prepareToPlay()
+                musicPlayer.play()
+            } catch {
+                print("error playing music!")
+            }
+        }
+        
         coinTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.addCoins), userInfo: nil, repeats: true)
         bombTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(GameScene.addBombs), userInfo: nil, repeats: true)
         
@@ -321,22 +362,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         blueNameLabel.fontName = "Chalkduster"
         blueNameLabel.fontSize = 25
         blueNameLabel.text = GlobalVariables.playerOneName
-        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+25, scene!.view!.bounds.minY+80)
+        blueNameLabel.position = CGPointMake(scene!.view!.bounds.minX+blueNameLabel.frame.width/2, scene!.view!.bounds.minY+80)
         self.addChild(blueNameLabel)
         redNameLabel.fontName = "Chalkduster"
         redNameLabel.fontSize = 25
         redNameLabel.text = GlobalVariables.playerTwoName
-        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.maxY-80)
+        redNameLabel.position = CGPointMake(scene!.view!.bounds.maxX-redNameLabel.frame.width/2, scene!.view!.bounds.maxY-80)
         redNameLabel.xScale = redNameLabel.xScale * -1
         redNameLabel.yScale = redNameLabel.yScale * -1
         self.addChild(redNameLabel)
         
         // Add player score labels
+        blueCoinIcon.position = CGPointMake(scene!.view!.bounds.maxX-50, scene!.view!.bounds.minY+80)
+        self.addChild(blueCoinIcon)
         blueScoreLabel.fontName = "Chalkduster"
         blueScoreLabel.fontSize = 25
         blueScoreLabel.text = "0"
         blueScoreLabel.position = CGPointMake(scene!.view!.bounds.maxX-25, scene!.view!.bounds.minY+80)
         self.addChild(blueScoreLabel)
+        
+        redCoinIcon.position = CGPointMake(scene!.view!.bounds.minX+50, scene!.view!.bounds.maxY-80)
+        self.addChild(redCoinIcon)
         redScoreLabel.fontName = "Chalkduster"
         redScoreLabel.fontSize = 25
         redScoreLabel.text = "0"
@@ -378,7 +424,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func updateBounds() {
         
         // Comparing position to view bounds and assigning accordingly
-        // Set velocity to nothing, to allow quick recovery
+        // Set velocity to 2, to allow quick recovery and prevent sticky edges
         if bluePlayer.position.x <= scene!.view!.bounds.minX {
             bluePlayer.position.x = scene!.view!.bounds.minX
             bluePlayer.physicsBody!.velocity = CGVectorMake(2,0)
@@ -431,7 +477,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set up random positions
         let x = CGFloat(arc4random() % UInt32(size.width) + UInt32(size.width))//(scene!.view!.bounds.maxX))
         let y = CGFloat(arc4random() % UInt32(size.height))// + scene!.view!.bounds.maxX)
-
         coin.position = CGPointMake(x,y)
 
         // Set up physics body
@@ -442,7 +487,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.physicsBody?.contactTestBitMask = blueCategory | redCategory
         coin.physicsBody?.fieldBitMask = fieldNodeCategory
         coin.physicsBody?.velocity = CGVectorMake(-100,0)
-        
         self.addChild(coin)
 
     }
@@ -471,9 +515,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bomb.physicsBody?.contactTestBitMask = blueCategory | redCategory
         bomb.physicsBody?.fieldBitMask = noFieldCategory
         bomb.physicsBody?.velocity = CGVectorMake(-100,0)
-        
         bomb.runAction(SKAction.rotateByAngle(45, duration: 5))
-        
         self.addChild(bomb)
         
     }
@@ -483,25 +525,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if bomb.position.x < scene!.view!.bounds.minX {
             bomb.removeFromParent()
         }
-    }
-    
-    // Add candy powerup
-    func addCandy() {
-        
-    }
-    
-    // Function to add a magnetic force for some time
-    func addForce(x:CGFloat, y:CGFloat) {
-        
-        // Sets up field force as radial gravity
-        fieldNode = SKFieldNode.radialGravityField()
-        fieldNode.enabled = true
-        fieldNode.position = CGPoint(x: x, y: y)
-        fieldNode.region = SKRegion(radius: 200.0)
-        fieldNode.strength = 0.05 // increase for more power
-        fieldNode.categoryBitMask = fieldNodeCategory
-        
-        self.addChild(fieldNode)
     }
     
     // Handles collisions
@@ -529,11 +552,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if coinHitParticle != nil {
                 coinHitParticle?.removeFromParent() // Removes existing coinhit particle
             }
+            
+            // Add the coin collected particle effect
             coinHitParticle!.targetNode = self
             bluePlayer.addChild(coinHitParticle!)
-            //coinHitParticle?.runAction(SKAction.waitForDuration(1.0)) //Only run for a second
-            //coinHitParticle?.removeFromParent()
 
+            
+            // Play the coin collected sound
+            if GlobalVariables.soundOn {
+                do {
+                    try audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.play()
+                } catch {
+                    print("error playing sound")
+                }
+            }
             
         } else if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==coinCategory {
             //print("redCategory and coinCategory contact")
@@ -546,42 +580,79 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 coinHitParticle?.removeFromParent() // Removes existing coinhit particle
                 stopCoinParticleTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.stopSparkle), userInfo: nil, repeats: false)
             }
+            
+            // Add the coin collected particle
             coinHitParticle!.targetNode = self
             redPlayer.addChild(coinHitParticle!)
-            //coinHitParticle?.runAction(SKAction.waitForDuration(1.0)) //Only run for a second
-            //coinHitParticle?.removeFromParent()
+            
+            // Play the coin collected sound
+            if GlobalVariables.soundOn {
+                do {
+                    try audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.play()
+                } catch {
+                    print("error playing sound")
+                }
+            }
         }
         
         // Check for contact between players and bombs
         if firstBody.categoryBitMask==blueCategory && secondBody.categoryBitMask==bombCategory {
-            //print("blueCategory and bombCategory contact")
+            print("blueCategory and bombCategory contact")
             GlobalVariables.blueHealth-=1
             print("blue health is \(GlobalVariables.blueHealth)")
             if bombHitParticle != nil {
                 bombHitParticle?.removeFromParent() // Removes existing bombhit particle
             }
+            
+            // add the bomb hit particle
             bombHitParticle!.targetNode = self
             bluePlayer.addChild(bombHitParticle!)
+            
             stopBluePlayerTimer() // = true
             if secondBody.node != nil {
                 secondBody.node!.removeFromParent()
             }
             
+            // Play the bomb hit sound
+            if GlobalVariables.soundOn {
+                do {
+                    try audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.play()
+                } catch {
+                    print("error playing sound")
+                }
+            }
+            
         } else if firstBody.categoryBitMask==redCategory && secondBody.categoryBitMask==bombCategory {
-            //print("redCategory and bombCategory contact")
+            print("redCategory and bombCategory contact")
             GlobalVariables.redHealth-=1
             print("red health is \(GlobalVariables.redHealth)")
             if bombHitParticle != nil {
                 bombHitParticle?.removeFromParent() // Removes existing bombhit particle
             }
+            
+            // Add the bomb hit particle
             bombHitParticle!.targetNode = self
             redPlayer.addChild(bombHitParticle!)
             stopRedPlayerTimer() // = true
             if secondBody.node != nil {
                 secondBody.node!.removeFromParent()
             }
+            
+            // Play the bomb hit sound
+            if GlobalVariables.soundOn {
+                do {
+                    try audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.play()
+                } catch {
+                    print("error playing sound")
+                }
+            }
         }
-        
     }
     
     // Setup timer to stop blue player movement
@@ -619,6 +690,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         
         print("Game over started. Transition to Game Over Scene")
+        
+        if GlobalVariables.soundOn {
+            do {
+                try audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            } catch {
+                print("error playing sound")
+            }
+        }
+        
+        // Add game over label
+        gameOverLabel.text = "Game Over!"
+        gameOverLabel.fontSize = 45
+        gameOverLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY)//+ 85)
+        self.addChild(gameOverLabel)
+        
+        // Set the winner and loser labels
+        if GlobalVariables.winner == 1 {
+            // Add game over label
+            let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
+            winnerLabel.text = "\(GlobalVariables.playerOneName) Wins!"
+            winnerLabel.fontSize = 30
+            winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
+            self.addChild(winnerLabel)
+            
+            let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
+            loserLabel.text = "\(GlobalVariables.playerTwoName) Loses!"
+            loserLabel.fontSize = 30
+            loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
+            self.addChild(loserLabel)
+        }
+        
+        if GlobalVariables.winner == 2 {
+            // Add game over label
+            let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
+            winnerLabel.text = "\(GlobalVariables.playerTwoName) Wins!"
+            winnerLabel.fontSize = 30
+            winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
+            self.addChild(winnerLabel)
+            
+            let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
+            loserLabel.text = "\(GlobalVariables.playerOneName) Loses!"
+            loserLabel.fontSize = 30
+            loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
+            self.addChild(loserLabel)
+        }
         
         // Invalidate timers
         coinTimer.invalidate()
@@ -663,12 +781,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Function is called before each frame is rendered
     override func update(currentTime: CFTimeInterval) {
        
-        // For debugging
-        addForce(redPlayer.position.x, y: redPlayer.position.y)
-
-        
-        //print("force x/y \(fieldNode.position.x) \(fieldNode.position.y)")
-        
         // Check for game over if conditions met
         if GlobalVariables.blueHealth <= 0 || GlobalVariables.redHealth <= 0 {
             

@@ -30,6 +30,9 @@ struct GlobalVariables {
     // Defines Player names
     static var playerOneName: String!
     static var playerTwoName = "AI"
+    
+    // Sets audio 
+    static var soundOn = true
 
 }
 

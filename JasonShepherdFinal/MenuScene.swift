@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class MenuScene: SKScene, UITextFieldDelegate {
     
@@ -30,6 +31,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
     let onLabel = SKLabelNode(fontNamed: "Chalkduster")
     let offLabel = SKLabelNode(fontNamed: "Chalkduster")
     
+    // Battle penguin dudes
     let bg2 = SKSpriteNode(texture: SKTexture(imageNamed: "bpmenu.png"))
     
     // Load menu view
@@ -63,7 +65,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
             bg2.size.width = self.size.width
             bg2.position = CGPointMake(self.size.width/2, self.view!.bounds.minY+bg2.size.height/2)
             //bg2.setScale(2)
-            bg2.zPosition = -3
             self.addChild(bg2)
             
             // Add menu label
@@ -88,6 +89,28 @@ class MenuScene: SKScene, UITextFieldDelegate {
         // Gets touches
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
+            
+            // Checks if sound on/off button are touched
+            if onLabel.containsPoint(location) {
+                
+                //Turn sound on
+                GlobalVariables.soundOn = true
+                
+                // Set font colors to match selection
+                onLabel.fontColor = UIColor.greenColor()
+                offLabel.fontColor = UIColor.whiteColor()
+                
+            }
+            
+            if offLabel.containsPoint(location) {
+                
+                //Turn sound off
+                GlobalVariables.soundOn = false
+                
+                //Set font colors to match selection
+                onLabel.fontColor = UIColor.whiteColor()
+                offLabel.fontColor = UIColor.redColor()
+            }
             
             // Checks if the single player option is touched
             if singleLabel.containsPoint(location) && !GlobalVariables.optionMade {
