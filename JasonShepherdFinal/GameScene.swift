@@ -8,6 +8,7 @@
 
 import SpriteKit
 import AVFoundation
+import MediaPlayer
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -93,8 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Variables for audio
     var audioPlayer = AVAudioPlayer()
-    var gameMusicPlayer = AVAudioPlayer()
-    
+   
     // Check to stop players after losing health
     var stopBluePlayer = false
     var stopRedPlayer = false
@@ -108,6 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Boolean to handle game over check
     var gameOverFlag = false
+    var preGameOverFlag = false //used to show some infor while waiting for gameover transition
     
     override func didMoveToView(view: SKView) {
         
@@ -157,39 +158,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(redBtnRight)
         }
         
+        // Add sounds if sound is on
         if GlobalVariables.soundOn {
+            
             // Assign sounds
             coinCollectSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("coincollected", ofType: "wav")!)
             bombHitSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("bombhit", ofType: "wav")!)
             gameOverSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gameover", ofType: "wav")!)
             gameBeginSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamebegin", ofType: "wav")!)
             
-            // Assign music
-            music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamemusic", ofType: "mp3")!)
-            
             // Play the game begin sound
             do {
-                try audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
-                audioPlayer.prepareToPlay()
-                audioPlayer.play()
+                try self.audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
+                self.audioPlayer.prepareToPlay()
+                self.audioPlayer.play()
             } catch {
                 print("error playing sound")
             }
             
-            // Play the music or catch an error
-            do {
-                try gameMusicPlayer = AVAudioPlayer(contentsOfURL: music)
-                gameMusicPlayer.numberOfLoops = -1
-                gameMusicPlayer.prepareToPlay()
-                gameMusicPlayer.play()
-            } catch {
-                print("error playing music!")
-            }
         }
         
+        // Timers to control release of coins and bombs
         coinTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(GameScene.addCoins), userInfo: nil, repeats: true)
         bombTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(GameScene.addBombs), userInfo: nil, repeats: true)
-        
     }
     
     // Overriding touchesBegan to detect screen touches
@@ -552,14 +543,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Add the coin collected particle effect
             coinHitParticle!.targetNode = self
             bluePlayer.addChild(coinHitParticle!)
-
             
             // Play the coin collected sound
             if GlobalVariables.soundOn {
                 do {
-                    try audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.play()
+                    try self.audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
                 } catch {
                     print("error playing sound")
                 }
@@ -584,9 +574,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Play the coin collected sound
             if GlobalVariables.soundOn {
                 do {
-                    try audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.play()
+                    try self.audioPlayer = AVAudioPlayer(contentsOfURL: coinCollectSound)
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
                 } catch {
                     print("error playing sound")
                 }
@@ -614,9 +604,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Play the bomb hit sound
             if GlobalVariables.soundOn {
                 do {
-                    try audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.play()
+                    try self.audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
                 } catch {
                     print("error playing sound")
                 }
@@ -641,9 +631,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Play the bomb hit sound
             if GlobalVariables.soundOn {
                 do {
-                    try audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.play()
+                    try self.audioPlayer = AVAudioPlayer(contentsOfURL: bombHitSound)
+                    self.audioPlayer.prepareToPlay()
+                    self.audioPlayer.play()
                 } catch {
                     print("error playing sound")
                 }
@@ -682,75 +672,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Function to show info while player waits for gameOver transition
+    func preGameOver() {
+        
+        // Only add this info screen if it isn't already added.
+        if gameOverLabel.text == nil {
+            // Add game over label
+            gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
+            gameOverLabel.text = "Game Over!"
+            gameOverLabel.fontSize = 45
+            gameOverLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY)//+ 85)
+            self.addChild(gameOverLabel)
+            
+            // Set the winner and loser labels
+            if GlobalVariables.winner == 1 {
+                // Add game over label
+                let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
+                winnerLabel.text = "\(GlobalVariables.playerOneName) Wins!"
+                winnerLabel.fontSize = 30
+                winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
+                self.addChild(winnerLabel)
+                
+                let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
+                loserLabel.text = "\(GlobalVariables.playerTwoName) Loses!"
+                loserLabel.fontSize = 30
+                loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
+                self.addChild(loserLabel)
+            }
+            
+            if GlobalVariables.winner == 2 {
+                // Add game over label
+                let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
+                winnerLabel.text = "\(GlobalVariables.playerTwoName) Wins!"
+                winnerLabel.fontSize = 30
+                winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
+                self.addChild(winnerLabel)
+                
+                let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
+                loserLabel.text = "\(GlobalVariables.playerOneName) Loses!"
+                loserLabel.fontSize = 30
+                loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
+                self.addChild(loserLabel)
+                
+            }
+            gameOverFlag = true
+        }
+    }
+    
     // Start game over
     func gameOver() {
         
+        
+        GlobalVariables.optionMade = false
+        GlobalVariables.onePlayerGame = false
+        GlobalVariables.twoPlayerGame = false
+        GlobalVariables.inMenu = true
+        
         print("Game over started.")
-        
-        // Only stop music if it is on and play game over sound
-        if GlobalVariables.soundOn {
-            
-            print("gameMusicPlayer.playing is \(gameMusicPlayer.playing)")
-            
-            if gameMusicPlayer.playing {
-                gameMusicPlayer.stop()
-                
-                print("gameMusicPlayer should have stopped")
-                
-                print("gameMusicPlayer.playing is \(gameMusicPlayer.playing)")
-            }
-            
-            gameMusicPlayer.stop()
-            
-            // stop the music or catch an error
-            do {
-                try gameMusicPlayer = AVAudioPlayer(contentsOfURL: gameOverSound)
-                gameMusicPlayer.numberOfLoops = 0
-                gameMusicPlayer.prepareToPlay()
-                gameMusicPlayer.play()
-            } catch {
-                print("error stopping music!")
-            }
-            
-            gameMusicPlayer.stop()
-        }
-        
-        // Add game over label
-        gameOverLabel.text = "Game Over!"
-        gameOverLabel.fontSize = 45
-        gameOverLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY)//+ 85)
-        self.addChild(gameOverLabel)
-        
-        // Set the winner and loser labels
-        if GlobalVariables.winner == 1 {
-            // Add game over label
-            let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
-            winnerLabel.text = "\(GlobalVariables.playerOneName) Wins!"
-            winnerLabel.fontSize = 30
-            winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
-            self.addChild(winnerLabel)
-            
-            let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
-            loserLabel.text = "\(GlobalVariables.playerTwoName) Loses!"
-            loserLabel.fontSize = 30
-            loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
-            self.addChild(loserLabel)
-        }
-        
-        if GlobalVariables.winner == 2 {
-            // Add game over label
-            let winnerLabel = SKLabelNode(fontNamed: "Chalkduster")
-            winnerLabel.text = "\(GlobalVariables.playerTwoName) Wins!"
-            winnerLabel.fontSize = 30
-            winnerLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 30)//+ 85)
-            self.addChild(winnerLabel)
-            
-            let loserLabel = SKLabelNode(fontNamed: "Chalkduster")
-            loserLabel.text = "\(GlobalVariables.playerOneName) Loses!"
-            loserLabel.fontSize = 30
-            loserLabel.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.midY - 60)//+ 85)
-            self.addChild(loserLabel)
-        }
         
         // Invalidate timers
         coinTimer.invalidate()
@@ -806,15 +784,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 GlobalVariables.winner = 0 // tie game
             }
             
-            gameOverFlag = true
+            preGameOverFlag = true
         }
 
         // Launch game over
         if gameOverFlag == true {
-            
+
             // Begin game over sequence
             gameOver()
         }
+        
+        // Launch pre game over
+        if preGameOverFlag == true {
+            preGameOver()
+        }
+        
         
         // Update as long as game is not over
         if gameOverFlag == false {

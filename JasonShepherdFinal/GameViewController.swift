@@ -21,7 +21,7 @@ struct GlobalVariables {
     static var blueHealth = 3
     static var redHealth = 3
     static var winner = 0 // 0 is tie game, 1 is blue winner, 2 is red winner
-    static var difficulty = 0.30 // difficulty setting for single player AI
+    static var difficulty = 0.25 // difficulty setting for single player AI
     
     // Boolean values to store game type for error checking
     static var optionMade = false

@@ -8,6 +8,7 @@
 
 import SpriteKit
 import AVFoundation
+import MediaPlayer
 
 class MenuScene: SKScene, UITextFieldDelegate {
     
@@ -37,11 +38,12 @@ class MenuScene: SKScene, UITextFieldDelegate {
 
     // Sounds will load as NSURLs
     var menuSound: NSURL!
-    var music: NSURL!
+    var menuMusic: NSURL!
+    var gameMusic: NSURL!
     
     // Variables for audio
-    var audioPlayer = AVAudioPlayer()
-    var musicPlayer = AVAudioPlayer()
+    var menuAudioPlayer = AVAudioPlayer()
+    var menuMusicPlayer = AVAudioPlayer()
     
     // Battle penguin dudes
     let bg2 = SKSpriteNode(texture: SKTexture(imageNamed: "bpmenu.png"))
@@ -57,12 +59,20 @@ class MenuScene: SKScene, UITextFieldDelegate {
         GlobalVariables.blueHealth = 3
         GlobalVariables.redHealth = 3
         
+        // Setup menu sound effect
         menuSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("menubutton", ofType: "wav")!)
         
-        // Assign music
-        music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("menumusic", ofType: "mp3")!)
+        // Setup menu music
+        menuMusic = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("menumusic", ofType: "mp3")!)
         
-        // Add buttons
+        // Setup game music
+        gameMusic = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamemusic", ofType: "mp3")!)
+        
+        // Prepare audio session
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, withOptions: [])
+        try! AVAudioSession.sharedInstance().setActive(true)
+        
+        // Build the intro screen
         if !GlobalVariables.optionMade {
             
             // Adding static background first
@@ -99,12 +109,12 @@ class MenuScene: SKScene, UITextFieldDelegate {
             if GlobalVariables.soundOn {
                 // Play the music or catch an error
                 do {
-                    try musicPlayer = AVAudioPlayer(contentsOfURL: music)
-                    musicPlayer.numberOfLoops = -1
-                    musicPlayer.prepareToPlay()
-                    musicPlayer.play()
+                    try self.menuMusicPlayer = AVAudioPlayer(contentsOfURL: menuMusic)
+                    self.menuMusicPlayer.numberOfLoops = -1
+                    self.menuMusicPlayer.prepareToPlay()
+                    self.menuMusicPlayer.play()
                 } catch {
-                    print("error playing music!")
+                    print("error playing menu music!")
                 }
             }
             
@@ -129,10 +139,10 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 if GlobalVariables.soundOn {
                     // Play the music or catch an error
                     do {
-                        try musicPlayer = AVAudioPlayer(contentsOfURL: music)
-                        musicPlayer.numberOfLoops = -1
-                        musicPlayer.prepareToPlay()
-                        musicPlayer.play()
+                        try self.menuMusicPlayer = AVAudioPlayer(contentsOfURL: menuMusic)
+                        self.menuMusicPlayer.numberOfLoops = -1
+                        self.menuMusicPlayer.prepareToPlay()
+                        self.menuMusicPlayer.play()
                     } catch {
                         print("error playing music!")
                     }
@@ -150,8 +160,8 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 //Turn sound off
                 GlobalVariables.soundOn = false
                 //audioPlayer.stop()
-                if musicPlayer.playing {
-                    musicPlayer.stop()
+                if self.menuMusicPlayer.playing {
+                    self.menuMusicPlayer.stop()
                 }
                 
                 //Set font colors to match selection
@@ -163,7 +173,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
             if easyLabel.containsPoint(location) {
                 
                 // Update AI difficulty
-                GlobalVariables.difficulty = 0.15 // pretty easy
+                GlobalVariables.difficulty = 0.05 // pretty easy
 
                 //Set font colors to match selection
                 easyLabel.fontColor = UIColor.yellowColor()
@@ -175,7 +185,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
             if normalLabel.containsPoint(location) {
                 
                 // Update AI difficulty
-                GlobalVariables.difficulty = 0.35 // normal difficulty
+                GlobalVariables.difficulty = 0.25 // normal difficulty
                 
                 //Set font colors to match selection
                 easyLabel.fontColor = UIColor.whiteColor()
@@ -187,7 +197,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
             if insaneLabel.containsPoint(location) {
                 
                 // Update AI difficulty
-                GlobalVariables.difficulty = 1.25 // insane difficulty
+                GlobalVariables.difficulty = 1.00 // insane difficulty
                 
                 //Set font colors to match selection
                 easyLabel.fontColor = UIColor.whiteColor()
@@ -217,9 +227,9 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 // Play the menu sound if sound is on
                 if GlobalVariables.soundOn {
                     do {
-                        try audioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
-                        audioPlayer.prepareToPlay()
-                        audioPlayer.play()
+                        try self.menuAudioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
+                        self.menuAudioPlayer.prepareToPlay()
+                        self.menuAudioPlayer.play()
                     } catch {
                         print("error playing sound")
                     }
@@ -249,9 +259,9 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 // Play a button menu sound
                 if GlobalVariables.soundOn {
                     do {
-                        try audioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
-                        audioPlayer.prepareToPlay()
-                        audioPlayer.play()
+                        try self.menuAudioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
+                        self.menuAudioPlayer.prepareToPlay()
+                        self.menuAudioPlayer.play()
                     } catch {
                         print("error playing sound")
                     }
@@ -462,9 +472,18 @@ class MenuScene: SKScene, UITextFieldDelegate {
     // Function to start game
     private func startGame() {
         
-        // Stop music
-        if musicPlayer.playing {
-            musicPlayer.stop()
+        // Switch to in game music
+        if GlobalVariables.soundOn {
+        menuMusicPlayer.stop()
+        // Play the music or catch an error
+        do {
+            try self.menuMusicPlayer = AVAudioPlayer(contentsOfURL: gameMusic)
+            self.menuMusicPlayer.numberOfLoops = -1
+            self.menuMusicPlayer.prepareToPlay()
+            self.menuMusicPlayer.play()
+        } catch {
+            print("error playing music!")
+        }
         }
         
         // Assign global names and remove textfields based on game type
