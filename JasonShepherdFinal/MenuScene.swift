@@ -68,10 +68,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
         // Setup game music
         gameMusic = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamemusic", ofType: "mp3")!)
         
-        // Prepare audio session
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, withOptions: [])
-        try! AVAudioSession.sharedInstance().setActive(true)
-        
         // Build the intro screen
         if !GlobalVariables.optionMade {
             
