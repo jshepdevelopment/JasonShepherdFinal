@@ -21,19 +21,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="battlesplash.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ElX-6m-TBk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="r0Q-uD-eXo">
-                                <rect key="frame" x="345" y="627" width="20" height="20"/>
-                                <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ElX-6m-TBk" secondAttribute="bottom" id="2aA-kJ-ah6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="r0Q-uD-eXo" secondAttribute="trailing" constant="-10" id="3RG-Ef-pSu"/>
                             <constraint firstItem="ElX-6m-TBk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="4hy-jk-O7N"/>
                             <constraint firstItem="ElX-6m-TBk" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="Sz0-P8-p3x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ElX-6m-TBk" secondAttribute="trailing" constant="-20" id="U6U-OQ-Ohy"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="r0Q-uD-eXo" secondAttribute="bottom" constant="20" id="aqh-bD-vb7"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
