@@ -49,7 +49,9 @@
 		04DBEFA31CD14C14005BC8E8 /* bombhit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFA21CD14C14005BC8E8 /* bombhit.wav */; };
 		04DBEFA71CD14E7E005BC8E8 /* gamebegin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFA61CD14E7E005BC8E8 /* gamebegin.wav */; };
 		04DBEFA91CD15416005BC8E8 /* gameover.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFA81CD15416005BC8E8 /* gameover.wav */; };
-		04DBEFAB1CD154F0005BC8E8 /* gamemusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFAA1CD154F0005BC8E8 /* gamemusic.mp3 */; };
+		04DBEFAD1CD18913005BC8E8 /* menumusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFAC1CD18913005BC8E8 /* menumusic.mp3 */; };
+		04DBEFB11CD1B8D0005BC8E8 /* gamemusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFB01CD1B8D0005BC8E8 /* gamemusic.mp3 */; };
+		04DBEFB31CD1BE43005BC8E8 /* battlesplash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFB21CD1BE43005BC8E8 /* battlesplash.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,7 +120,9 @@
 		04DBEFA21CD14C14005BC8E8 /* bombhit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bombhit.wav; sourceTree = "<group>"; };
 		04DBEFA61CD14E7E005BC8E8 /* gamebegin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gamebegin.wav; sourceTree = "<group>"; };
 		04DBEFA81CD15416005BC8E8 /* gameover.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameover.wav; sourceTree = "<group>"; };
-		04DBEFAA1CD154F0005BC8E8 /* gamemusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gamemusic.mp3; sourceTree = "<group>"; };
+		04DBEFAC1CD18913005BC8E8 /* menumusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menumusic.mp3; sourceTree = "<group>"; };
+		04DBEFB01CD1B8D0005BC8E8 /* gamemusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gamemusic.mp3; sourceTree = "<group>"; };
+		04DBEFB21CD1BE43005BC8E8 /* battlesplash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = battlesplash.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,12 +177,14 @@
 		04A1B0051CBFEEED009559EE /* JasonShepherdFinal */ = {
 			isa = PBXGroup;
 			children = (
+				04DBEFB21CD1BE43005BC8E8 /* battlesplash.jpg */,
 				04DBEFA21CD14C14005BC8E8 /* bombhit.wav */,
 				04DBEFA01CD14B71005BC8E8 /* coincollected.wav */,
 				04DBEF9E1CD14B49005BC8E8 /* menubutton.wav */,
 				04DBEFA61CD14E7E005BC8E8 /* gamebegin.wav */,
 				04DBEFA81CD15416005BC8E8 /* gameover.wav */,
-				04DBEFAA1CD154F0005BC8E8 /* gamemusic.mp3 */,
+				04DBEFAC1CD18913005BC8E8 /* menumusic.mp3 */,
+				04DBEFB01CD1B8D0005BC8E8 /* gamemusic.mp3 */,
 				04DBEF981CD10F96005BC8E8 /* bpmenu.png */,
 				04DBEF861CCF0CB5005BC8E8 /* background1.png */,
 				04DBEF871CCF0CB5005BC8E8 /* background2.png */,
@@ -344,6 +350,7 @@
 				047D04B91CC68DE700F9074E /* right-arrow.png in Resources */,
 				04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */,
 				047D04D81CC9B75D00F9074E /* RocketTrail.sks in Resources */,
+				04DBEFB11CD1B8D0005BC8E8 /* gamemusic.mp3 in Resources */,
 				04DBEF911CD0607E005BC8E8 /* up-arrow-on.png in Resources */,
 				04DBEFA11CD14B71005BC8E8 /* coincollected.wav in Resources */,
 				04DBEFA71CD14E7E005BC8E8 /* gamebegin.wav in Resources */,
@@ -370,7 +377,8 @@
 				04A1B0121CBFEEED009559EE /* Assets.xcassets in Resources */,
 				04DBEF951CD060AF005BC8E8 /* left-arrow-on.png in Resources */,
 				04A1B0101CBFEEED009559EE /* Main.storyboard in Resources */,
-				04DBEFAB1CD154F0005BC8E8 /* gamemusic.mp3 in Resources */,
+				04DBEFAD1CD18913005BC8E8 /* menumusic.mp3 in Resources */,
+				04DBEFB31CD1BE43005BC8E8 /* battlesplash.jpg in Resources */,
 				047D04B71CC68DB100F9074E /* down-arrow.png in Resources */,
 				047D04C91CC8209500F9074E /* bomb.png in Resources */,
 				04DBEF881CCF0CB5005BC8E8 /* background1.png in Resources */,

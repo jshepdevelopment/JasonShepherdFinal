@@ -31,6 +31,13 @@ class MenuScene: SKScene, UITextFieldDelegate {
     let onLabel = SKLabelNode(fontNamed: "Chalkduster")
     let offLabel = SKLabelNode(fontNamed: "Chalkduster")
     
+    var menuSound: NSURL!
+    var music: NSURL!
+    
+    // Variables for audio
+    var audioPlayer = AVAudioPlayer()
+    var musicPlayer = AVAudioPlayer()
+    
     // Battle penguin dudes
     let bg2 = SKSpriteNode(texture: SKTexture(imageNamed: "bpmenu.png"))
     
@@ -44,6 +51,11 @@ class MenuScene: SKScene, UITextFieldDelegate {
         GlobalVariables.redScore = 0
         GlobalVariables.blueHealth = 3
         GlobalVariables.redHealth = 3
+        
+        menuSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("menubutton", ofType: "wav")!)
+        
+        // Assign music
+        music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("menumusic", ofType: "mp3")!)
         
         // Add buttons
         if !GlobalVariables.optionMade {
@@ -78,6 +90,19 @@ class MenuScene: SKScene, UITextFieldDelegate {
             mainLabel2.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.maxY - 110)//+ 85)
             self.addChild(mainLabel2)
             
+            // Play menu music
+            if GlobalVariables.soundOn {
+                // Play the music or catch an error
+                do {
+                    try musicPlayer = AVAudioPlayer(contentsOfURL: music)
+                    musicPlayer.numberOfLoops = -1
+                    musicPlayer.prepareToPlay()
+                    musicPlayer.play()
+                } catch {
+                    print("error playing music!")
+                }
+            }
+            
             // Add the buttons
             addButtons()
         }
@@ -95,6 +120,18 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 
                 //Turn sound on
                 GlobalVariables.soundOn = true
+                // Play menu music
+                if GlobalVariables.soundOn {
+                    // Play the music or catch an error
+                    do {
+                        try musicPlayer = AVAudioPlayer(contentsOfURL: music)
+                        musicPlayer.numberOfLoops = -1
+                        musicPlayer.prepareToPlay()
+                        musicPlayer.play()
+                    } catch {
+                        print("error playing music!")
+                    }
+                }
                 
                 // Set font colors to match selection
                 onLabel.fontColor = UIColor.greenColor()
@@ -106,6 +143,10 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 
                 //Turn sound off
                 GlobalVariables.soundOn = false
+                //audioPlayer.stop()
+                if musicPlayer.playing {
+                    musicPlayer.stop()
+                }
                 
                 //Set font colors to match selection
                 onLabel.fontColor = UIColor.whiteColor()
@@ -126,12 +167,26 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 print("One player game")
                 GlobalVariables.optionMade = true
                 GlobalVariables.onePlayerGame = true
+                
+                // Get only one player name
                 getOneName()
+                
+                if GlobalVariables.soundOn {
+                    do {
+                        try audioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
+                        audioPlayer.prepareToPlay()
+                        audioPlayer.play()
+                    } catch {
+                        print("error playing sound")
+                    }
+                }
                 
             }
             
             // Checks if the multi player option is touched
             if multiLabel.containsPoint(location) && !GlobalVariables.optionMade {
+                
+                print("Two player game")
                 mainLabel1.removeFromParent()
                 mainLabel2.removeFromParent()
                 singleLabel.removeFromParent()
@@ -141,11 +196,23 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 offLabel.removeFromParent()
                 bg2.removeFromParent()
                 GlobalVariables.singlePlayer = false
-                print("Two player game")
                 GlobalVariables.optionMade = true
                 GlobalVariables.twoPlayerGame = true
+                
+                // Get one and two player name
                 getOneName()
                 getTwoName()
+                
+                // Play a button menu sound
+                if GlobalVariables.soundOn {
+                    do {
+                        try audioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
+                        audioPlayer.prepareToPlay()
+                        audioPlayer.play()
+                    } catch {
+                        print("error playing sound")
+                    }
+                }
                 
             }
            
@@ -323,7 +390,10 @@ class MenuScene: SKScene, UITextFieldDelegate {
     // Function to start game
     private func startGame() {
         
-        // Reset option made if continued game is needed
+        // Stop music
+        if musicPlayer.playing {
+            musicPlayer.stop()
+        }
         
         // Assign global names and remove textfields based on game type
         if GlobalVariables.onePlayerGame {

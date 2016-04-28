@@ -93,7 +93,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Variables for audio
     var audioPlayer = AVAudioPlayer()
-    var musicPlayer = AVAudioPlayer()
+    var gameMusicPlayer = AVAudioPlayer()
     
     // Check to stop players after losing health
     var stopBluePlayer = false
@@ -118,7 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Setup physics world
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVectorMake(0, 0)
+        self.physicsWorld.gravity = CGVectorMake(0, -5)
         
         // Setup and scroll parallax background
         scrollBackground(bg1Texture, scrollSpeed: 0.50, bgzPosition: -3)
@@ -168,7 +168,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             music = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("gamemusic", ofType: "mp3")!)
             
             // Play the game begin sound
-
             do {
                 try audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
                 audioPlayer.prepareToPlay()
@@ -179,10 +178,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Play the music or catch an error
             do {
-                try musicPlayer = AVAudioPlayer(contentsOfURL: music)
-                musicPlayer.numberOfLoops = -1
-                musicPlayer.prepareToPlay()
-                musicPlayer.play()
+                try gameMusicPlayer = AVAudioPlayer(contentsOfURL: music)
+                gameMusicPlayer.numberOfLoops = -1
+                gameMusicPlayer.prepareToPlay()
+                gameMusicPlayer.play()
             } catch {
                 print("error playing music!")
             }
@@ -348,7 +347,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bluePlayer.physicsBody!.affectedByGravity = false
         bluePlayer.physicsBody!.categoryBitMask = blueCategory
         bluePlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
-        bluePlayer.physicsBody!.fieldBitMask = noFieldCategory
     
         redPlayer.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(50, 30))//CGRectMake(0, 0, 60, 30))//SKPhysicsBody(circleOfRadius: redPlayerTexture.size().height/2)
         redPlayer.physicsBody!.dynamic = true
@@ -356,7 +354,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         redPlayer.physicsBody!.affectedByGravity = false
         redPlayer.physicsBody!.categoryBitMask = redCategory
         redPlayer.physicsBody!.contactTestBitMask = coinCategory | bombCategory
-        redPlayer.physicsBody!.fieldBitMask = noFieldCategory
         
         // Add player name labels
         blueNameLabel.fontName = "Chalkduster"
@@ -481,11 +478,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // Set up physics body
         coin.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-        coin.physicsBody?.dynamic = false
-        coin.physicsBody?.affectedByGravity = true
+        coin.physicsBody?.dynamic = true
+        coin.physicsBody?.affectedByGravity = false
         coin.physicsBody?.categoryBitMask = coinCategory
         coin.physicsBody?.contactTestBitMask = blueCategory | redCategory
-        coin.physicsBody?.fieldBitMask = fieldNodeCategory
         coin.physicsBody?.velocity = CGVectorMake(-100,0)
         self.addChild(coin)
 
@@ -510,7 +506,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Assign physics body attributes
         bomb.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         bomb.physicsBody?.dynamic = true
-        bomb.physicsBody?.affectedByGravity = true
+        bomb.physicsBody?.affectedByGravity = false
         bomb.physicsBody?.categoryBitMask = bombCategory
         bomb.physicsBody?.contactTestBitMask = blueCategory | redCategory
         bomb.physicsBody?.fieldBitMask = noFieldCategory
@@ -689,15 +685,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Start game over
     func gameOver() {
         
-        print("Game over started. Transition to Game Over Scene")
+        print("Game over started.")
         
+        // Only stop music if it is on and play game over sound
         if GlobalVariables.soundOn {
+            gameMusicPlayer.stop()
+            // stop the music or catch an error
             do {
-                try audioPlayer = AVAudioPlayer(contentsOfURL: gameBeginSound)
-                audioPlayer.prepareToPlay()
-                audioPlayer.play()
+                try gameMusicPlayer = AVAudioPlayer(contentsOfURL: gameOverSound)
+                gameMusicPlayer.numberOfLoops = 0
+                gameMusicPlayer.prepareToPlay()
+                gameMusicPlayer.play()
             } catch {
-                print("error playing sound")
+                print("error stopping music!")
             }
         }
         
@@ -741,17 +741,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Invalidate timers
         coinTimer.invalidate()
         bombTimer.invalidate()
-        
-        // Send scores to game over screen
-        //GlobalVariables.blueScore = blueScore
-        //GlobalVariables.redScore = redScore
-
+        print("Timers invalidated")
         // Transisition into game over scene
         let gameOverScene = GameOverScene(size: view!.bounds.size)
         let transition = SKTransition.fadeWithDuration(0.15)
-        
+        print("transitions loaded")
         gameOverScene.scaleMode = .ResizeFill
         view!.presentScene(gameOverScene, transition: transition)
+        print("view presented")
     }
     
     // Scrolling background
@@ -800,6 +797,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // Launch game over
         if gameOverFlag == true {
+            
+            // Begin game over sequence
             gameOver()
         }
         
