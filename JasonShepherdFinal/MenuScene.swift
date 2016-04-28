@@ -30,7 +30,12 @@ class MenuScene: SKScene, UITextFieldDelegate {
     let soundLabel = SKLabelNode(fontNamed: "Chalkduster")
     let onLabel = SKLabelNode(fontNamed: "Chalkduster")
     let offLabel = SKLabelNode(fontNamed: "Chalkduster")
-    
+    let difficultLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let easyLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let normalLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let insaneLabel = SKLabelNode(fontNamed: "Chalkduster")
+
+    // Sounds will load as NSURLs
     var menuSound: NSURL!
     var music: NSURL!
     
@@ -80,12 +85,12 @@ class MenuScene: SKScene, UITextFieldDelegate {
             self.addChild(bg2)
             
             // Add menu label
-            mainLabel1.text = "Battle"
+            mainLabel1.text = "BATTLE"
             mainLabel1.fontSize = 50
             mainLabel1.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.maxY - 60)//+ 85)
             self.addChild(mainLabel1)
             
-            mainLabel2.text = "Penguins!"
+            mainLabel2.text = "PENGUINS"
             mainLabel2.fontSize = 50
             mainLabel2.position = CGPoint(x: self.view!.bounds.midX, y: self.view!.bounds.maxY - 110)//+ 85)
             self.addChild(mainLabel2)
@@ -139,6 +144,7 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 
             }
             
+            // controls off button
             if offLabel.containsPoint(location) {
                 
                 //Turn sound off
@@ -151,6 +157,42 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 //Set font colors to match selection
                 onLabel.fontColor = UIColor.whiteColor()
                 offLabel.fontColor = UIColor.redColor()
+            }
+            
+            // controls easy label presses
+            if easyLabel.containsPoint(location) {
+                
+                // Update AI difficulty
+                GlobalVariables.difficulty = 0.15 // pretty easy
+
+                //Set font colors to match selection
+                easyLabel.fontColor = UIColor.yellowColor()
+                normalLabel.fontColor = UIColor.whiteColor()
+                insaneLabel.fontColor = UIColor.whiteColor()
+            }
+            
+            // controls normal label presses
+            if normalLabel.containsPoint(location) {
+                
+                // Update AI difficulty
+                GlobalVariables.difficulty = 0.35 // normal difficulty
+                
+                //Set font colors to match selection
+                easyLabel.fontColor = UIColor.whiteColor()
+                normalLabel.fontColor = UIColor.yellowColor()
+                insaneLabel.fontColor = UIColor.whiteColor()
+            }
+            
+            // controls insane label presses
+            if insaneLabel.containsPoint(location) {
+                
+                // Update AI difficulty
+                GlobalVariables.difficulty = 1.25 // insane difficulty
+                
+                //Set font colors to match selection
+                easyLabel.fontColor = UIColor.whiteColor()
+                normalLabel.fontColor = UIColor.whiteColor()
+                insaneLabel.fontColor = UIColor.yellowColor()
             }
             
             // Checks if the single player option is touched
@@ -169,8 +211,10 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 GlobalVariables.onePlayerGame = true
                 
                 // Get only one player name
+                getDifficulty()
                 getOneName()
                 
+                // Play the menu sound if sound is on
                 if GlobalVariables.soundOn {
                     do {
                         try audioPlayer = AVAudioPlayer(contentsOfURL: menuSound)
@@ -180,7 +224,6 @@ class MenuScene: SKScene, UITextFieldDelegate {
                         print("error playing sound")
                     }
                 }
-                
             }
             
             // Checks if the multi player option is touched
@@ -230,6 +273,35 @@ class MenuScene: SKScene, UITextFieldDelegate {
                 playerTwoNameTextField.resignFirstResponder()
             }
         }
+    }
+    
+    // Function to set difficulty level
+    private func getDifficulty() {
+        // One player game, so choose AI difficulty
+        // Add menu label
+        difficultLabel.text = "AI Difficulty"
+        difficultLabel.fontSize = 30
+        difficultLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMinY(self.frame)+130)
+        self.addChild(difficultLabel)
+        
+        // Add easy label
+        easyLabel.text = "Simple"
+        easyLabel.fontSize = 30
+        easyLabel.position = CGPoint(x:CGRectGetMinX(self.frame)+easyLabel.frame.width/2, y:CGRectGetMinY(self.frame)+90)
+        self.addChild(easyLabel)
+        
+        // Add normal label
+        normalLabel.text = "Normal"
+        normalLabel.fontColor = UIColor.yellowColor()
+        normalLabel.fontSize = 30
+        normalLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMinY(self.frame)+90)
+        self.addChild(normalLabel)
+        
+        // Add insane label
+        insaneLabel.text = "Insane"
+        insaneLabel.fontSize = 30
+        insaneLabel.position = CGPoint(x:CGRectGetMaxX(self.frame)-insaneLabel.frame.width/2, y:CGRectGetMinY(self.frame)+90)
+        self.addChild(insaneLabel)
     }
     
     // Get name for one player game

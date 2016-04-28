@@ -41,8 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let btnTextureRightOn = SKTexture(imageNamed: "right-arrow-on.png")
     
     // Define a coin icon node
-    let blueCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coin1.png")) //SKNode! = nil
-    let redCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coin1.png")) //SKNode! = nil
+    let blueCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coinicon.png")) //SKNode! = nil
+    let redCoinIcon = SKSpriteNode(texture: SKTexture(imageNamed: "coinicon.png")) //SKNode! = nil
     
     // Define player nodes
     var bluePlayer: SKNode! = nil
@@ -400,7 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func updateAI() {
         
         // Assign AI difficulty
-        let difficulty:CGFloat = 0.05
+        let difficulty:CGFloat = CGFloat(GlobalVariables.difficulty)
 
         // Update red position based on blue position and difficulty level
         if bluePlayer.position.x > redPlayer.position.x {
@@ -689,7 +689,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Only stop music if it is on and play game over sound
         if GlobalVariables.soundOn {
+            
+            print("gameMusicPlayer.playing is \(gameMusicPlayer.playing)")
+            
+            if gameMusicPlayer.playing {
+                gameMusicPlayer.stop()
+                
+                print("gameMusicPlayer should have stopped")
+                
+                print("gameMusicPlayer.playing is \(gameMusicPlayer.playing)")
+            }
+            
             gameMusicPlayer.stop()
+            
             // stop the music or catch an error
             do {
                 try gameMusicPlayer = AVAudioPlayer(contentsOfURL: gameOverSound)
@@ -699,6 +711,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } catch {
                 print("error stopping music!")
             }
+            
+            gameMusicPlayer.stop()
         }
         
         // Add game over label

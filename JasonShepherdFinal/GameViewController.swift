@@ -21,6 +21,7 @@ struct GlobalVariables {
     static var blueHealth = 3
     static var redHealth = 3
     static var winner = 0 // 0 is tie game, 1 is blue winner, 2 is red winner
+    static var difficulty = 0.30 // difficulty setting for single player AI
     
     // Boolean values to store game type for error checking
     static var optionMade = false
@@ -43,15 +44,15 @@ class GameViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        //if let scene = GameScene(fileNamed:"GameScene") {
-        //if let scene = MenuScene(size: view!.bounds.size) {
-
+        // Setup SKView
         let skView = self.view as! SKView
-  
+        
+        // Set inMenu and set menu screen if inMenu is true
         if GlobalVariables.inMenu == true {
             scene = MenuScene(size: view!.bounds.size)
         }
-
+        
+        // Scene is GameScene if not in menu
         if GlobalVariables.inMenu == false {
             scene = GameScene(fileNamed: "GameScene")
             scene.size  = skView.bounds.size
@@ -75,17 +76,19 @@ class GameViewController: UIViewController {
 
     }
 
+    // Autorotate is okay in game, forced portrait view in menu
     override func shouldAutorotate() -> Bool {
         
         // Allow auto-rotate in game, not in menu
         if GlobalVariables.inMenu == true || GlobalVariables.inGameOverMenu == true {
             return false
         } else {
-            return true
+            return true // only return true if not in menu
         }
         
     }
-
+    
+    // Supported orientation
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return .AllButUpsideDown
@@ -94,11 +97,13 @@ class GameViewController: UIViewController {
         }
     }
 
+    // Check for memory warning
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
 
+    // Hide status bar for full screen
     override func prefersStatusBarHidden() -> Bool {
         return true
     }

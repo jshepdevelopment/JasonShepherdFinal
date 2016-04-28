@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04A1B0021CBFEEEC009559EE"
-               BuildableName = "JasonShepherdFinal.app"
-               BlueprintName = "JasonShepherdFinal"
-               ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+               BuildableName = "Battle Penguins.app"
+               BlueprintName = "Battle Penguins"
+               ReferencedContainer = "container:Battle Penguins.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04A1B01A1CBFEEF7009559EE"
-               BuildableName = "JasonShepherdFinalTests.xctest"
-               BlueprintName = "JasonShepherdFinalTests"
-               ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+               BuildableName = "Battle Penguins.xctest"
+               BlueprintName = "Battle PenguinsTests"
+               ReferencedContainer = "container:Battle Penguins.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04A1B0251CBFEEF7009559EE"
-               BuildableName = "JasonShepherdFinalUITests.xctest"
-               BlueprintName = "JasonShepherdFinalUITests"
-               ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+               BuildableName = "Battle Penguins.xctest"
+               BlueprintName = "Battle PenguinsUITests"
+               ReferencedContainer = "container:Battle Penguins.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04A1B0021CBFEEEC009559EE"
-            BuildableName = "JasonShepherdFinal.app"
-            BlueprintName = "JasonShepherdFinal"
-            ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+            BuildableName = "Battle Penguins.app"
+            BlueprintName = "Battle Penguins"
+            ReferencedContainer = "container:Battle Penguins.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04A1B0021CBFEEEC009559EE"
-            BuildableName = "JasonShepherdFinal.app"
-            BlueprintName = "JasonShepherdFinal"
-            ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+            BuildableName = "Battle Penguins.app"
+            BlueprintName = "Battle Penguins"
+            ReferencedContainer = "container:Battle Penguins.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04A1B0021CBFEEEC009559EE"
-            BuildableName = "JasonShepherdFinal.app"
-            BlueprintName = "JasonShepherdFinal"
-            ReferencedContainer = "container:JasonShepherdFinal.xcodeproj">
+            BuildableName = "Battle Penguins.app"
+            BlueprintName = "Battle Penguins"
+            ReferencedContainer = "container:Battle Penguins.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

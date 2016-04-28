@@ -12,7 +12,6 @@
 		047D04B71CC68DB100F9074E /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04B61CC68DB100F9074E /* down-arrow.png */; };
 		047D04B91CC68DE700F9074E /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04B81CC68DE700F9074E /* right-arrow.png */; };
 		047D04BF1CC6CEBA00F9074E /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047D04BE1CC6CEBA00F9074E /* MenuScene.swift */; };
-		047D04C31CC80ACC00F9074E /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C21CC80ACC00F9074E /* cross.png */; };
 		047D04C51CC80FAB00F9074E /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047D04C41CC80FAB00F9074E /* GameOverScene.swift */; };
 		047D04C91CC8209500F9074E /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04C81CC8209500F9074E /* bomb.png */; };
 		047D04D31CC9AF5300F9074E /* redpenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = 047D04D21CC9AF5300F9074E /* redpenguin.png */; };
@@ -52,6 +51,7 @@
 		04DBEFAD1CD18913005BC8E8 /* menumusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFAC1CD18913005BC8E8 /* menumusic.mp3 */; };
 		04DBEFB11CD1B8D0005BC8E8 /* gamemusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFB01CD1B8D0005BC8E8 /* gamemusic.mp3 */; };
 		04DBEFB31CD1BE43005BC8E8 /* battlesplash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFB21CD1BE43005BC8E8 /* battlesplash.jpg */; };
+		04DBEFB51CD24DE8005BC8E8 /* coinicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04DBEFB41CD24DE8005BC8E8 /* coinicon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,14 +77,13 @@
 		047D04B61CC68DB100F9074E /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
 		047D04B81CC68DE700F9074E /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
 		047D04BE1CC6CEBA00F9074E /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
-		047D04C21CC80ACC00F9074E /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		047D04C41CC80FAB00F9074E /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		047D04C81CC8209500F9074E /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb.png; sourceTree = "<group>"; };
 		047D04D21CC9AF5300F9074E /* redpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redpenguin.png; sourceTree = "<group>"; };
 		047D04D41CC9AF7F00F9074E /* bluepenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluepenguin.png; sourceTree = "<group>"; };
 		047D04D61CC9B75D00F9074E /* RocketTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RocketTrail.sks; sourceTree = "<group>"; };
 		047D04D71CC9B75D00F9074E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
-		04A1B0031CBFEEEC009559EE /* JasonShepherdFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JasonShepherdFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04A1B0031CBFEEEC009559EE /* Battle Penguins.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Battle Penguins.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B0061CBFEEED009559EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04A1B0081CBFEEED009559EE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		04A1B00A1CBFEEED009559EE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -93,10 +92,10 @@
 		04A1B0111CBFEEED009559EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04A1B0141CBFEEED009559EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04A1B0161CBFEEED009559EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04A1B01B1CBFEEF7009559EE /* JasonShepherdFinalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JasonShepherdFinalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04A1B01B1CBFEEF7009559EE /* Battle Penguins.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Battle Penguins.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B01F1CBFEEF7009559EE /* JasonShepherdFinalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JasonShepherdFinalTests.swift; sourceTree = "<group>"; };
 		04A1B0211CBFEEF7009559EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04A1B0261CBFEEF7009559EE /* JasonShepherdFinalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JasonShepherdFinalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04A1B0261CBFEEF7009559EE /* Battle Penguins.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Battle Penguins.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A1B02A1CBFEEF7009559EE /* JasonShepherdFinalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JasonShepherdFinalUITests.swift; sourceTree = "<group>"; };
 		04A1B02C1CBFEEF7009559EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DBEF781CCEA414005BC8E8 /* coin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin1.png; sourceTree = "<group>"; };
@@ -123,6 +122,7 @@
 		04DBEFAC1CD18913005BC8E8 /* menumusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menumusic.mp3; sourceTree = "<group>"; };
 		04DBEFB01CD1B8D0005BC8E8 /* gamemusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gamemusic.mp3; sourceTree = "<group>"; };
 		04DBEFB21CD1BE43005BC8E8 /* battlesplash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = battlesplash.jpg; sourceTree = "<group>"; };
+		04DBEFB41CD24DE8005BC8E8 /* coinicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coinicon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,9 +167,9 @@
 		04A1B0041CBFEEEC009559EE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				04A1B0031CBFEEEC009559EE /* JasonShepherdFinal.app */,
-				04A1B01B1CBFEEF7009559EE /* JasonShepherdFinalTests.xctest */,
-				04A1B0261CBFEEF7009559EE /* JasonShepherdFinalUITests.xctest */,
+				04A1B0031CBFEEEC009559EE /* Battle Penguins.app */,
+				04A1B01B1CBFEEF7009559EE /* Battle Penguins.xctest */,
+				04A1B0261CBFEEF7009559EE /* Battle Penguins.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,7 +197,6 @@
 				04DBEF941CD060AF005BC8E8 /* left-arrow-on.png */,
 				04DBEF961CD060C5005BC8E8 /* right-arrow-on.png */,
 				047D04C81CC8209500F9074E /* bomb.png */,
-				047D04C21CC80ACC00F9074E /* cross.png */,
 				04DBEF781CCEA414005BC8E8 /* coin1.png */,
 				04DBEF791CCEA414005BC8E8 /* coin2.png */,
 				04DBEF7A1CCEA414005BC8E8 /* coin3.png */,
@@ -205,6 +204,7 @@
 				04DBEF7C1CCEA414005BC8E8 /* coin5.png */,
 				04DBEF7D1CCEA414005BC8E8 /* coin6.png */,
 				04DBEF7E1CCEA414005BC8E8 /* coin7.png */,
+				04DBEFB41CD24DE8005BC8E8 /* coinicon.png */,
 				047D04D41CC9AF7F00F9074E /* bluepenguin.png */,
 				047D04D21CC9AF5300F9074E /* redpenguin.png */,
 				04A1B0061CBFEEED009559EE /* AppDelegate.swift */,
@@ -242,9 +242,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		04A1B0021CBFEEEC009559EE /* JasonShepherdFinal */ = {
+		04A1B0021CBFEEEC009559EE /* Battle Penguins */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04A1B02F1CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinal" */;
+			buildConfigurationList = 04A1B02F1CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle Penguins" */;
 			buildPhases = (
 				04A1AFFF1CBFEEEC009559EE /* Sources */,
 				04A1B0001CBFEEEC009559EE /* Frameworks */,
@@ -254,14 +254,14 @@
 			);
 			dependencies = (
 			);
-			name = JasonShepherdFinal;
+			name = "Battle Penguins";
 			productName = JasonShepherdFinal;
-			productReference = 04A1B0031CBFEEEC009559EE /* JasonShepherdFinal.app */;
+			productReference = 04A1B0031CBFEEEC009559EE /* Battle Penguins.app */;
 			productType = "com.apple.product-type.application";
 		};
-		04A1B01A1CBFEEF7009559EE /* JasonShepherdFinalTests */ = {
+		04A1B01A1CBFEEF7009559EE /* Battle PenguinsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04A1B0321CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinalTests" */;
+			buildConfigurationList = 04A1B0321CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle PenguinsTests" */;
 			buildPhases = (
 				04A1B0171CBFEEF7009559EE /* Sources */,
 				04A1B0181CBFEEF7009559EE /* Frameworks */,
@@ -272,14 +272,14 @@
 			dependencies = (
 				04A1B01D1CBFEEF7009559EE /* PBXTargetDependency */,
 			);
-			name = JasonShepherdFinalTests;
+			name = "Battle PenguinsTests";
 			productName = JasonShepherdFinalTests;
-			productReference = 04A1B01B1CBFEEF7009559EE /* JasonShepherdFinalTests.xctest */;
+			productReference = 04A1B01B1CBFEEF7009559EE /* Battle Penguins.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		04A1B0251CBFEEF7009559EE /* JasonShepherdFinalUITests */ = {
+		04A1B0251CBFEEF7009559EE /* Battle PenguinsUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04A1B0351CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinalUITests" */;
+			buildConfigurationList = 04A1B0351CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle PenguinsUITests" */;
 			buildPhases = (
 				04A1B0221CBFEEF7009559EE /* Sources */,
 				04A1B0231CBFEEF7009559EE /* Frameworks */,
@@ -290,9 +290,9 @@
 			dependencies = (
 				04A1B0281CBFEEF7009559EE /* PBXTargetDependency */,
 			);
-			name = JasonShepherdFinalUITests;
+			name = "Battle PenguinsUITests";
 			productName = JasonShepherdFinalUITests;
-			productReference = 04A1B0261CBFEEF7009559EE /* JasonShepherdFinalUITests.xctest */;
+			productReference = 04A1B0261CBFEEF7009559EE /* Battle Penguins.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -321,7 +321,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 04A1AFFE1CBFEEEC009559EE /* Build configuration list for PBXProject "JasonShepherdFinal" */;
+			buildConfigurationList = 04A1AFFE1CBFEEEC009559EE /* Build configuration list for PBXProject "Battle Penguins" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -334,9 +334,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				04A1B0021CBFEEEC009559EE /* JasonShepherdFinal */,
-				04A1B01A1CBFEEF7009559EE /* JasonShepherdFinalTests */,
-				04A1B0251CBFEEF7009559EE /* JasonShepherdFinalUITests */,
+				04A1B0021CBFEEEC009559EE /* Battle Penguins */,
+				04A1B01A1CBFEEF7009559EE /* Battle PenguinsTests */,
+				04A1B0251CBFEEF7009559EE /* Battle PenguinsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -351,6 +351,7 @@
 				04A1B0091CBFEEED009559EE /* GameScene.sks in Resources */,
 				047D04D81CC9B75D00F9074E /* RocketTrail.sks in Resources */,
 				04DBEFB11CD1B8D0005BC8E8 /* gamemusic.mp3 in Resources */,
+				04DBEFB51CD24DE8005BC8E8 /* coinicon.png in Resources */,
 				04DBEF911CD0607E005BC8E8 /* up-arrow-on.png in Resources */,
 				04DBEFA11CD14B71005BC8E8 /* coincollected.wav in Resources */,
 				04DBEFA71CD14E7E005BC8E8 /* gamebegin.wav in Resources */,
@@ -368,7 +369,6 @@
 				04DBEF851CCEA414005BC8E8 /* coin7.png in Resources */,
 				047D04D51CC9AF7F00F9074E /* bluepenguin.png in Resources */,
 				04DBEF801CCEA414005BC8E8 /* coin2.png in Resources */,
-				047D04C31CC80ACC00F9074E /* cross.png in Resources */,
 				04DBEFA31CD14C14005BC8E8 /* bombhit.wav in Resources */,
 				047D04B51CC68DA200F9074E /* left-arrow.png in Resources */,
 				047D04B31CC68B9400F9074E /* up-arrow.png in Resources */,
@@ -437,12 +437,12 @@
 /* Begin PBXTargetDependency section */
 		04A1B01D1CBFEEF7009559EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 04A1B0021CBFEEEC009559EE /* JasonShepherdFinal */;
+			target = 04A1B0021CBFEEEC009559EE /* Battle Penguins */;
 			targetProxy = 04A1B01C1CBFEEF7009559EE /* PBXContainerItemProxy */;
 		};
 		04A1B0281CBFEEF7009559EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 04A1B0021CBFEEEC009559EE /* JasonShepherdFinal */;
+			target = 04A1B0021CBFEEEC009559EE /* Battle Penguins */;
 			targetProxy = 04A1B0271CBFEEF7009559EE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -558,7 +558,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinal;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Battle Penguins";
 			};
 			name = Debug;
 		};
@@ -570,7 +570,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinal;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Battle Penguins";
 			};
 			name = Release;
 		};
@@ -582,8 +582,8 @@
 				INFOPLIST_FILE = JasonShepherdFinalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinalTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JasonShepherdFinal.app/JasonShepherdFinal";
+				PRODUCT_NAME = "Battle Penguins";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Battle Penguins.app/Battle Penguins";
 			};
 			name = Debug;
 		};
@@ -594,8 +594,8 @@
 				INFOPLIST_FILE = JasonShepherdFinalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinalTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JasonShepherdFinal.app/JasonShepherdFinal";
+				PRODUCT_NAME = "Battle Penguins";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Battle Penguins.app/Battle Penguins";
 			};
 			name = Release;
 		};
@@ -606,7 +606,7 @@
 				INFOPLIST_FILE = JasonShepherdFinalUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinalUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Battle Penguins";
 				TEST_TARGET_NAME = JasonShepherdFinal;
 			};
 			name = Debug;
@@ -617,7 +617,7 @@
 				INFOPLIST_FILE = JasonShepherdFinalUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.slcc.csis2640.JasonShepherdFinalUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Battle Penguins";
 				TEST_TARGET_NAME = JasonShepherdFinal;
 			};
 			name = Release;
@@ -625,7 +625,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		04A1AFFE1CBFEEEC009559EE /* Build configuration list for PBXProject "JasonShepherdFinal" */ = {
+		04A1AFFE1CBFEEEC009559EE /* Build configuration list for PBXProject "Battle Penguins" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04A1B02D1CBFEEF7009559EE /* Debug */,
@@ -634,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		04A1B02F1CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinal" */ = {
+		04A1B02F1CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle Penguins" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04A1B0301CBFEEF7009559EE /* Debug */,
@@ -643,7 +643,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		04A1B0321CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinalTests" */ = {
+		04A1B0321CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle PenguinsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04A1B0331CBFEEF7009559EE /* Debug */,
@@ -652,7 +652,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		04A1B0351CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "JasonShepherdFinalUITests" */ = {
+		04A1B0351CBFEEF7009559EE /* Build configuration list for PBXNativeTarget "Battle PenguinsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04A1B0361CBFEEF7009559EE /* Debug */,
